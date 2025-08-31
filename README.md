@@ -1,359 +1,326 @@
-# E-Commerce Store - Modern Django Web Application 🧿
+
+
+# SocialWave - Modern Social Media Platform
 
 **Author:** Srusti  
-**Version:** 1.0.0  
+**Version:** 1.1.0  
 **License:** Proprietary (Personal Use Only)
 
-A feature-rich, modern e-commerce platform built with Django and Bootstrap 5.   Complete shopping experience with product listings, cart functionality, user authentication, and order processing.
+A feature-rich, modern social media platform built with cutting-edge web technologies. SocialWave offers multiple design variations and a complete backend infrastructure for a full social media experience.
 
-## 🎥 Demo Video
+## Demo Video
 
-**📹 Watch the complete demo:** [DEMO.mp4](./media/project_demo/DEMO.mp4)
+<video width="100%" controls>
+  <source src="backend/project_demo/DEMO.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
-## 🎬 Demo GIF
+*Complete demo showcasing all features and design variations*
 
-![Demo GIF](./media/project_demo/DEMO.gif)
+## Screenshots
 
-*Quick preview of the application in action*
+### Homepage - Main Design
+![Homepage](backend/Screenshots/Home.jpeg)
 
-> **📺 For complete functionality demonstration including sorting, search, and cart operations, watch the demo video above!**
+### Profile Page
+![Profile Page](backend/Screenshots/Profile_page.jpeg)
 
-## 📸 Screenshots
+### Messages & Chat
+![Messages](backend/Screenshots/message.jpeg)
 
-### 🏠 Homepage - Product Listings
-![Homepage](./media/Screenshots/Home.jpeg)
+### Explore Section
+![Explore](backend/Screenshots/Explore.jpeg)
 
-### 📱 Product Details
-![Product Details](./media/Screenshots/Product_detail.jpeg)
+### Notifications
+![Notifications](backend/Screenshots/Notifications.jpeg)
 
-### 🛒 Shopping Cart
-![Shopping Cart](./media/Screenshots/Cart.jpeg)
+### User Authentication
+![Login](backend/Screenshots/login.jpeg)
+![Sign Up](backend/Screenshots/sign_up.jpeg)
 
-### 🔍 Search Functionality
-![Search](./media/Screenshots/Search.jpeg)
+### Media Gallery
+![Media](backend/Screenshots/media.jpeg)
 
-### 🔐 User Authentication
-![Login](./media/Screenshots/Login.jpeg)
-![Register](./media/Screenshots/Register.jpeg)
+### Analytics Dashboard
+![Analytics](backend/Screenshots/analytics.jpeg)
 
-### ℹ️ About Page
-![About](./media/Screenshots/About.jpeg)
+### Achievements System
+![Achievements](backend/Screenshots/achievements.jpeg)
 
-### 📞 Contact Page
-![Contact](./media/Screenshots/Contact.jpeg)
-
-#### Note: For complete functionality demonstration including sorting, search, and cart operations, refer to media/project_demo/DEMO.mp4 (demo video)
+### Post Creation
+![Posting](backend/Screenshots/posting.jpeg)
 
 ## Features
 
-### Core E-Commerce Functionality
-- **Product Management** - Complete product catalog with categories, images, and detailed descriptions
-- **Shopping Cart** - Session-based cart for anonymous users, persistent cart for authenticated users
-- **User Authentication** - Secure registration, login, logout with Django Allauth
-- **Order Processing** - Complete checkout flow with order history
-- **Search & Filter** - Product search and category-based filtering
-- **Product Sorting** - Sort by price (low to high, high to low), newest, and name
+### Multiple Design Variations
+- **`index.html`** - Main premium design with advanced animations and glassmorphism effects
+- **`index0.html`** - Simple, clean design focused on core functionality
+- **`index01.html`** - Profile-focused design with enhanced user experience
+- **`working.html`** - Minimal working version for testing
+
+### Core Functionality
+- User Authentication - Secure login/signup with JWT tokens
+- Post Creation - Rich text posts with image/video support
+- Real-time Interactions - Like, comment, share with instant feedback
+- Stories Feature - Instagram-style stories with progress indicators
+- Live Streaming - Go live functionality with viewer count
+- Direct Messaging - Real-time chat with typing indicators
+- Notifications - Smart notification system with badges
+- Profile Management - Comprehensive user profiles with analytics
 
 ### Advanced Features
-- **Responsive Design** - Mobile-first Bootstrap 5 implementation
-- **Image Handling** - Product images with fallback gradients
-- **AJAX Cart Operations** - Real-time cart updates without page refresh
-- **User Profiles** - Profile management and order history
-- **Admin Interface** - Django admin for product and order management
-- **Modern UI/UX** - Glassmorphism effects, animations, and smooth transitions
-
-### Security & Performance
-- **CSRF Protection** - Django's built-in CSRF protection
-- **User Authentication** - Secure password handling with Django's auth system
-- **Input Validation** - Server-side validation for all forms
-- **Media Security** - Proper media file handling and serving
-- **Session Management** - Secure session handling for cart operations
+- AI Assistant - Built-in AI for content suggestions and help
+- Voice Messages - Audio message support in chat
+- Photo Lightbox - Full-screen image viewing experience
+- Infinite Scroll - Seamless content loading
+- Mood Selector - Express feelings with posts
+- Achievement System - Gamification with badges and levels
+- Analytics Dashboard - Detailed engagement metrics
+- Theme Toggle - Dark/light mode support
+- Responsive Design - Mobile-first approach
 
 ## Technology Stack
 
-### Backend
-- **Django 4.x** - Python web framework
-- **Python 3.x** - Programming language
-- **SQLite** - Database (easily configurable to PostgreSQL/MySQL)
-- **Django Allauth** - Authentication system
-- **Pillow** - Image processing
-- **Django Crispy Forms** - Form rendering
-
 ### Frontend
-- **HTML5** - Semantic markup
-- **CSS3** - Modern styling with animations and gradients
-- **Bootstrap 5** - Responsive CSS framework
-- **JavaScript (ES6+)** - Interactive functionality
-- **Font Awesome** - Icon library
-- **AJAX** - Asynchronous operations
+- HTML5 - Semantic markup
+- CSS3 - Advanced animations, glassmorphism, custom scrollbars
+- JavaScript (ES6+) - Modern vanilla JavaScript
+- Tailwind CSS - Utility-first CSS framework
+- Font Awesome - Icon library
 
-### Development Tools
-- **Django Debug Toolbar** - Development debugging
-- **Django Extensions** - Additional management commands
-- **Git** - Version control
-- **Virtual Environment** - Python dependency isolation
+### Backend
+- Node.js - Runtime environment
+- Express.js - Web application framework
+- MongoDB - NoSQL database with Mongoose ODM
+- JWT - JSON Web Tokens for authentication
+- Socket.io - Real-time communication
+- Multer - File upload handling
+- Sharp - Image processing
+
+### Security & Performance
+- Helmet - Security headers
+- Rate Limiting - API protection
+- Compression - Response compression
+- CORS - Cross-origin resource sharing
+- bcryptjs - Password hashing
+- Express Validator - Input validation
 
 ## Project Structure
 
 ```
-E_commerce_store/
-├── ecommerce_project/
-│   ├── settings.py         # Django configuration
-│   ├── urls.py            # Main URL configuration
-│   ├── wsgi.py            # WSGI configuration
-│   └── asgi.py            # ASGI configuration
-├── store/
-│   ├── models.py          # Product, Cart, Order models
-│   ├── views.py           # Business logic and view functions
-│   ├── urls.py            # Store URL patterns
-│   ├── forms.py           # Django forms
-│   ├── admin.py           # Admin interface configuration
-│   ├── management/
-│   │   └── commands/
-│   │       └── populate_data.py  # Sample data population
-│   └── templates/store/   # Store-specific templates
-├── users/
-│   ├── models.py          # User profile models
-│   ├── views.py           # User-related views
-│   ├── urls.py            # User URL patterns
-│   └── templates/users/   # User-specific templates
-├── templates/
-│   ├── base.html          # Base template with navigation
-│   ├── store/             # Store templates
-│   └── account/           # Authentication templates
-├── static/
-│   ├── css/               # Custom stylesheets
-│   ├── js/                # JavaScript files
-│   └── images/            # Static images
-├── media/
-│   ├── products/          # Uploaded product images
-│   ├── project_demo/      # Demo video and GIF
-│   │   ├── DEMO.mp4      # Project demonstration video
-│   │   └── DEMO.gif      # Project demonstration GIF
-│   └── Screenshots/       # Project screenshots
-├── requirements.txt       # Python dependencies
-├── manage.py             # Django management script
-├── .gitignore            # Git ignore file
-├── LICENSE               # License file
-└── README.md             # This file
+social-media-app/
+├── frontend/
+│   ├── index.html          # Main premium design
+│   ├── index0.html         # Simple clean design
+│   ├── index01.html        # Profile-focused design
+│   ├── working.html        # Minimal working version
+│   ├── js/
+│   │   ├── social-features.js  # Isolated social functionality
+│   │   ├── main.js         # Core JavaScript
+│   │   ├── auth.js         # Authentication logic
+│   │   ├── posts.js        # Post management
+│   │   └── profile.js      # Profile functionality
+│   └── css/
+│       └── styles.css      # Additional styles
+├── backend/
+│   ├── server.js           # Main server file
+│   ├── models/             # Database models
+│   ├── controllers/        # Route controllers
+│   ├── middleware/         # Custom middleware
+│   ├── routes/             # API routes
+│   ├── Screenshots/        # Project screenshots
+│   └── project_demo/       # Demo video
+├── .env                    # Environment variables
+├── package.json           # Dependencies
+└── README.md              # This file
 ```
 
 ## Quick Start
 
 ### Prerequisites
-- Python 3.8 or higher
-- pip (Python package installer)
+- Node.js (v14 or higher)
+- MongoDB (local or Atlas)
 - Git
 
 ### Installation
 
-1. **Clone the repository**
+1. Clone the repository
    ```bash
-   git clone https://github.com/Srusti-26/E_commerce_store.git
-   cd E_commerce_store
+   git clone https://github.com/srusti/social-media-app.git
+   cd social-media-app
    ```
 
-2. **Create virtual environment**
+2. Install dependencies
    ```bash
-   python -m venv venv
+   # Install backend dependencies
+   cd backend
+   npm install
    
-   # Windows
-   venv\Scripts\activate
+   # Return to root directory
+   cd ..
+   ```
+
+3. Environment Setup
+   ```bash
+   # Copy environment file
+   cp backend/.env.example backend/.env
    
-   # macOS/Linux
-   source venv/bin/activate
+   # Edit .env with your configurations
+   # - MongoDB connection string
+   # - JWT secrets
+   # - Email credentials (optional)
    ```
 
-3. **Install dependencies**
+4. Start the application
    ```bash
-   pip install -r requirements.txt
+   # Start backend server
+   cd backend
+   npm start
+   
+   # Open frontend in browser
+   # Navigate to frontend/index.html
    ```
 
-4. **Database setup**
-   ```bash
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
-
-5. **Create superuser (optional)**
-   ```bash
-   python manage.py createsuperuser
-   ```
-
-6. **Populate sample data**
-   ```bash
-   python manage.py populate_data
-   ```
-
-7. **Run development server**
-   ```bash
-   python manage.py runserver
-   ```
-
-8. **Access the application**
-   - Open browser and go to `http://127.0.0.1:8000/`
-   - Admin interface: `http://127.0.0.1:8000/admin/`
+### Alternative Quick Start
+```bash
+# Use the provided batch file (Windows)
+start.bat
+```
 
 ## Usage Guide
 
-### For Customers
+### Design Variations
 
-#### Browsing Products
-- View all products on the homepage
-- Use category filters to narrow down products
-- Search for specific products using the search bar
-- Sort products by price, name, or newest additions
+#### Main Design (`index.html`)
+- Best for: Production use, showcasing advanced features
+- Features: Full glassmorphism UI, advanced animations, AI assistant
+- Use case: Complete social media experience
 
-#### Shopping Cart
-- Add products to cart from product listings
-- View cart contents in the navigation
-- Update quantities or remove items
-- Proceed to checkout when ready
+#### Simple Design (`index0.html`)
+- Best for: Learning, basic functionality testing
+- Features: Clean interface, core social features
+- Use case: Educational purposes, minimal setup
 
-#### User Account
-- Register for a new account or login
-- View order history in profile
-- Update profile information
-- Logout securely
+#### Profile Design (`index01.html`)
+- Best for: Profile-centric applications
+- Features: Enhanced profile view, achievements, analytics
+- Use case: Portfolio sites, professional networks
 
-#### Checkout Process
-1. Add items to cart
-2. Click "Checkout" button
-3. Fill in shipping and billing information
-4. Review order details
-5. Complete purchase
+#### Working Version (`working.html`)
+- Best for: Quick testing, development
+- Features: Guaranteed working like/comment/post functionality
+- Use case: Feature testing, debugging
 
-### For Administrators
+### Key Features Usage
 
-#### Product Management
-- Access Django admin at `/admin/`
-- Add new products with images and descriptions
-- Organize products into categories
-- Update pricing and inventory
+#### Creating Posts
+1. Click the floating "+" button or "What's on your mind?"
+2. Add text content and/or images
+3. Select mood (optional)
+4. Choose privacy settings
+5. Click "Post"
 
-#### Order Management
-- View all customer orders
-- Update order status
-- Generate reports
-- Manage customer accounts
+#### Interacting with Posts
+- Like: Click the heart icon
+- Comment: Click comment icon, type, and press Enter
+- Share: Click share icon for sharing options
+
+#### Stories
+- Click "+" to add your story
+- View others' stories by clicking their profile pictures
+- Stories auto-advance with progress indicators
+
+#### Live Streaming
+1. Click "Go Live" button
+2. Set stream title and description
+3. Configure settings
+4. Start broadcasting
 
 ## Configuration
 
 ### Environment Variables
-Create a `.env` file in the project root:
-
 ```env
-# Django Settings
-SECRET_KEY=your-secret-key-here
-DEBUG=True
-ALLOWED_HOSTS=localhost,127.0.0.1
+# Database
+MONGODB_URI=mongodb://localhost:27017/socialwave
 
-# Database (for production)
-DATABASE_URL=postgresql://user:password@localhost:5432/ecommerce_db
+# Authentication
+JWT_SECRET=your-secret-key
+JWT_REFRESH_SECRET=your-refresh-secret
 
-# Email Settings (optional)
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_HOST_USER=your-email@gmail.com
-EMAIL_HOST_PASSWORD=your-app-password
-EMAIL_USE_TLS=True
+# Server
+PORT=5006
+NODE_ENV=development
 
-# Media and Static Files
-MEDIA_ROOT=/path/to/media/files
-STATIC_ROOT=/path/to/static/files
+# Email (Optional)
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASS=your-app-password
+
+# Frontend
+FRONTEND_URL=http://localhost:3000
 ```
 
-### Database Configuration
-The project uses SQLite by default. For production, configure PostgreSQL:
+### MongoDB Setup
+1. Local MongoDB:
+   ```bash
+   # Install MongoDB Community Edition
+   # Start MongoDB service
+   mongod --dbpath /path/to/data/directory
+   ```
 
-```python
-# settings.py
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ecommerce_db',
-        'USER': 'your_username',
-        'PASSWORD': 'your_password',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-```
+2. MongoDB Atlas (Cloud):
+   - Create account at mongodb.com
+   - Create cluster and get connection string
+   - Add to MONGODB_URI in .env
 
 ## Customization
 
-### Adding New Features
-1. **New Models**: Add to `store/models.py`
-2. **New Views**: Add to `store/views.py`
-3. **New Templates**: Create in `templates/store/`
-4. **New URLs**: Add to `store/urls.py`
+### Themes
+- Modify CSS variables in the `:root` selector
+- Update color schemes in Tailwind configuration
+- Add new theme variants in JavaScript
 
-### Styling Customization
-- Modify `static/css/custom.css` for custom styles
-- Update Bootstrap variables for theme changes
-- Add new animations and effects
+### Features
+- Add new post types in `posts.js`
+- Extend user profiles in `profile.js`
+- Create custom middleware in `backend/middleware/`
 
-### Payment Integration
-The project is ready for payment gateway integration:
-- Stripe integration points in checkout views
-- PayPal integration ready
-- Custom payment processor support
+### UI Components
+- Glassmorphism effects in CSS
+- Animation keyframes for interactions
+- Responsive breakpoints for mobile
 
-## Deployment
+## Mobile Responsiveness
 
-### Production Checklist
-- [ ] Set `DEBUG = False`
-- [ ] Configure production database
-- [ ] Set up static file serving
-- [ ] Configure media file serving
-- [ ] Set up SSL certificate
-- [ ] Configure email backend
-- [ ] Set up monitoring and logging
-
-### Deployment Options
-- **Heroku**: Easy deployment with Heroku Postgres
-- **DigitalOcean**: App Platform or Droplet deployment
-- **AWS**: EC2 with RDS database
-- **PythonAnywhere**: Simple Django hosting
+- Breakpoints: Mobile-first design with Tailwind CSS
+- Touch Interactions: Optimized for touch devices
+- Performance: Lazy loading and optimized images
+- PWA Ready: Service worker compatible
 
 ## Security Features
 
-- **CSRF Protection**: All forms protected against CSRF attacks
-- **SQL Injection Prevention**: Django ORM prevents SQL injection
-- **XSS Protection**: Template auto-escaping enabled
-- **Secure Authentication**: Django's built-in authentication system
-- **Session Security**: Secure session configuration
-- **Input Validation**: Server-side validation for all inputs
+- Authentication: JWT-based secure authentication
+- Input Validation: Server-side validation for all inputs
+- Rate Limiting: API endpoint protection
+- CORS: Configured cross-origin policies
+- Helmet: Security headers implementation
+- Password Hashing: bcrypt for secure password storage
 
 ## Performance Optimizations
 
-- **Database Optimization**: Efficient queries with select_related
-- **Static File Compression**: Gzip compression enabled
-- **Image Optimization**: Pillow for image processing
-- **Caching**: Django caching framework ready
-- **CDN Ready**: Static files ready for CDN deployment
-
-## Testing
-
-Run the test suite:
-```bash
-python manage.py test
-```
-
-### Test Coverage
-- Model tests for all business logic
-- View tests for all endpoints
-- Form validation tests
-- Integration tests for user workflows
+- Image Optimization: Sharp for image processing
+- Compression: Gzip compression for responses
+- Caching: Strategic caching implementation
+- Lazy Loading: Images and content lazy loading
+- Minification: CSS and JS optimization
 
 ## License
 
 **IMPORTANT: This project is under a Proprietary License**
 
-- **Personal Use**: Allowed for learning and personal projects
-- **Commercial Use**: Not permitted without explicit written permission
-- **Distribution**: Cannot distribute, sell, or sublicense without permission
-- **Modification**: Personal modifications allowed, commercial modifications require permission
+- Personal Use: Allowed for learning 
+- Commercial Use: Not permitted without explicit written permission
+- Distribution: Cannot distribute, sell, or sublicense
+- Modification: Cannot modify without permission
 
 **For commercial licensing or permissions, contact:** 1nt23ad052.srusti@nmit.ac.in
 
@@ -367,69 +334,30 @@ See the [LICENSE](LICENSE) file for complete terms and conditions.
 4. Push to branch (`git push origin feature/AmazingFeature`)
 5. Open Pull Request
 
-## Troubleshooting
+## License
 
-### Common Issues
-
-**Static files not loading**
-```bash
-python manage.py collectstatic
-```
-
-**Database migration errors**
-```bash
-python manage.py makemigrations --empty store
-python manage.py migrate
-```
-
-**Permission denied errors**
-```bash
-# Check file permissions
-chmod +x manage.py
-```
-
-**Import errors**
-```bash
-# Reinstall requirements
-pip install -r requirements.txt --force-reinstall
-```
-
-## Support
-
-For support and questions:
-- **Email**: 1nt23ad052.srusti@nmit.ac.in
-- **Issues**: Create an issue on GitHub
-- **Documentation**: Check Django documentation for framework-specific questions
-
-## Roadmap
-
-### Upcoming Features
-- [ ] Product reviews and ratings
-- [ ] Wishlist functionality
-- [ ] Advanced search with filters
-- [ ] Email notifications
-- [ ] Inventory management
-- [ ] Multi-vendor support
-- [ ] Mobile app API
-- [ ] Analytics dashboard
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Author
 
 **Srusti**
 - GitHub: [@Srusti-26](https://github.com/Srusti-26)
 - Email: 1nt23ad052.srusti@nmit.ac.in
-- Institution: NMIT, Bangalore
 
 ## Acknowledgments
 
-- Django Software Foundation for the amazing framework
-- Bootstrap team for the responsive CSS framework
-- Font Awesome for the icon library
-- Python community for excellent packages
-- NMIT for educational support
+- Font Awesome for icons
+- Tailwind CSS for styling framework
+- Unsplash for demo images
+- MongoDB for database solution
+- Express.js community for backend framework
+
+## Support
+
+For support, email 1nt23ad052.srusti@nmit.ac.in or create an issue on GitHub.
 
 ---
 
-**⭐ Star this repository if you found it helpful!**
+ **⭐ this repository if you found it helpful!** 
 
-*Built with ❤️ by Srusti using Django and Bootstrap*
+*Built with ❤️ by Srusti*
