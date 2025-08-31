@@ -1,4 +1,4 @@
-# E-Commerce Store - Modern Django Web Application
+# E-Commerce Store - Modern Django Web Application 🧿
 
 **Author:** Srusti  
 **Version:** 1.0.0  
@@ -20,65 +20,29 @@ A feature-rich, modern e-commerce platform built with Django and Bootstrap 5.   
 
 ## 📸 Screenshots
 
-<details>
-<summary><strong>🏠 Homepage - Product Listings</strong></summary>
-
+### 🏠 Homepage - Product Listings
 ![Homepage](./media/Screenshots/Home.jpeg)
 
-*Modern product grid with search, filtering, and sorting capabilities*
-</details>
-
-<details>
-<summary><strong>📱 Product Details</strong></summary>
-
+### 📱 Product Details
 ![Product Details](./media/Screenshots/Product_detail.jpeg)
 
-*Detailed product view with add to cart functionality*
-</details>
-
-<details>
-<summary><strong>🛒 Shopping Cart</strong></summary>
-
+### 🛒 Shopping Cart
 ![Shopping Cart](./media/Screenshots/Cart.jpeg)
 
-*Interactive shopping cart with quantity controls*
-</details>
-
-<details>
-<summary><strong>🔍 Search Functionality</strong></summary>
-
+### 🔍 Search Functionality
 ![Search](./media/Screenshots/Search.jpeg)
 
-*Real-time product search with instant results*
-</details>
-
-<details>
-<summary><strong>🔐 User Authentication</strong></summary>
-
-**Login Page:**
+### 🔐 User Authentication
 ![Login](./media/Screenshots/Login.jpeg)
-
-**Registration Page:**
 ![Register](./media/Screenshots/Register.jpeg)
 
-*Secure user authentication with Django Allauth*
-</details>
-
-<details>
-<summary><strong>ℹ️ About Page</strong></summary>
-
+### ℹ️ About Page
 ![About](./media/Screenshots/About.jpeg)
 
-*Professional about page with company information*
-</details>
-
-<details>
-<summary><strong>📞 Contact Page</strong></summary>
-
+### 📞 Contact Page
 ![Contact](./media/Screenshots/Contact.jpeg)
 
-*Contact form with modern design*
-</details>
+#### Note: For complete functionality demonstration including sorting, search, and cart operations, refer to media/project_demo/DEMO.mp4 (demo video)
 
 ## Features
 
@@ -185,7 +149,7 @@ E_commerce_store/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/E_commerce_store.git
+   git clone https://github.com/Srusti-26/E_commerce_store.git
    cd E_commerce_store
    ```
 
@@ -462,6 +426,7 @@ For support and questions:
 - Bootstrap team for the responsive CSS framework
 - Font Awesome for the icon library
 - Python community for excellent packages
+- NMIT for educational support
 
 ---
 
