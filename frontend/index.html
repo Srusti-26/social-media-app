@@ -1,0 +1,3228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialWave - Connect & Share</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        :root {
+            --primary: #2563eb;
+            --secondary: #3b82f6;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --dark: #0f172a;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+        }
+        
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-card {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+        }
+        
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 35px 60px rgba(0, 0, 0, 0.15);
+        }
+        
+        .slide-in {
+            animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .pulse-ring {
+            animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 1; }
+            80%, 100% { transform: scale(1.2); opacity: 0; }
+        }
+        
+        .typing-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        
+        .typing-indicator:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator:nth-child(2) { animation-delay: -0.16s; }
+        .typing-indicator:nth-child(3) { animation-delay: 0s; }
+        
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        
+        .notification-badge {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
+            40%, 43% { transform: translate3d(0,-8px,0); }
+            70% { transform: translate3d(0,-4px,0); }
+            90% { transform: translate3d(0,-2px,0); }
+        }
+        
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .ripple:active::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .floating-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            width: 4rem;
+            height: 4rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 40px rgba(37, 99, 235, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: float-btn 3s ease-in-out infinite;
+        }
+        
+        @keyframes float-btn {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 50px rgba(37, 99, 235, 0.6);
+        }
+        
+        .scroll-to-top {
+            position: fixed;
+            bottom: 8rem;
+            right: 2rem;
+            z-index: 1000;
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            box-shadow: 0 8px 32px rgba(6, 182, 212, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+        
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .scroll-to-top:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(6, 182, 212, 0.6);
+        }
+        
+        .toast {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 10000;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transform: translateX(400px);
+            transition: all 0.3s ease;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .toast.success { background: linear-gradient(135deg, var(--success), #059669); }
+        .toast.error { background: linear-gradient(135deg, var(--error), #dc2626); }
+        .toast.info { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+        
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, var(--primary), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .loading-spinner {
+            width: 1.5rem;
+            height: 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .infinite-scroll-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .infinite-scroll-loading.visible {
+            opacity: 1;
+        }
+        
+        .chat-bubble {
+            max-width: 70%;
+            padding: 0.75rem 1rem;
+            border-radius: 18px;
+            margin-bottom: 0.5rem;
+            word-wrap: break-word;
+        }
+        
+        .chat-bubble.sent {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 6px;
+        }
+        
+        .chat-bubble.received {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            color: white;
+            border-bottom-left-radius: 6px;
+        }
+        
+        .online-indicator {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            background: var(--success);
+            border: 2px solid white;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+        
+        .post-card {
+            transition: all 0.3s ease;
+        }
+        
+        .post-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .achievement-badge {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #92400e;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .stats-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .message-input {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            width: 100%;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .message-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .message-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Photo Gallery Styles */
+        .photo-gallery {
+            display: grid;
+            gap: 0.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .photo-gallery.single { grid-template-columns: 1fr; }
+        .photo-gallery.double { grid-template-columns: 1fr 1fr; }
+        .photo-gallery.triple { 
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+        .photo-gallery.triple img:first-child {
+            grid-row: 1 / 3;
+        }
+        .photo-gallery.quad { grid-template-columns: 1fr 1fr; }
+        
+        .photo-gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .photo-gallery img:hover {
+            transform: scale(1.02);
+            filter: brightness(1.1);
+        }
+        
+        /* Comments Section */
+        .comments-section {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .comments-section.expanded {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .comment {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .comment:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .comment-input {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .comment-input input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            color: white;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .comment-input input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+        
+        .comment-input input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Story Viewer */
+        .story-viewer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .story-content {
+            max-width: 400px;
+            max-height: 80vh;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .story-progress {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            right: 1rem;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .story-progress-bar {
+            height: 100%;
+            background: white;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        
+        /* Live Stream Indicator */
+        .live-indicator {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            animation: pulse-live 2s infinite;
+        }
+        
+        @keyframes pulse-live {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Reaction Animations */
+        .reaction-animation {
+            position: absolute;
+            pointer-events: none;
+            font-size: 1.5rem;
+            animation: reactionFloat 2s ease-out forwards;
+        }
+        
+        @keyframes reactionFloat {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        /* Voice Message */
+        .voice-message {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+        }
+        
+        .voice-waveform {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            flex: 1;
+        }
+        
+        .voice-bar {
+            width: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+            animation: voiceWave 1.5s ease-in-out infinite;
+        }
+        
+        .voice-bar:nth-child(1) { height: 10px; animation-delay: 0s; }
+        .voice-bar:nth-child(2) { height: 20px; animation-delay: 0.1s; }
+        .voice-bar:nth-child(3) { height: 15px; animation-delay: 0.2s; }
+        .voice-bar:nth-child(4) { height: 25px; animation-delay: 0.3s; }
+        .voice-bar:nth-child(5) { height: 12px; animation-delay: 0.4s; }
+        
+        @keyframes voiceWave {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.3); }
+        }
+        
+        /* Mood Selector */
+        .mood-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .mood-option {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+        
+        .mood-option:hover, .mood-option.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        /* Photo Lightbox */
+        .photo-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+        
+        .lightbox-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -3rem;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .lightbox-close:hover {
+            transform: scale(1.1);
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body class="min-h-screen relative">
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="cursor"></div>
+    
+    <!-- Navigation -->
+    <nav class="glass-nav fixed top-0 left-0 right-0 z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-wave-square text-white text-lg"></i>
+                </div>
+                <h1 class="text-2xl font-bold gradient-text">SocialWave</h1>
+            </div>
+            
+            <!-- Navigation Links -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="nav-link text-white hover:text-blue-300 transition-colors active" data-section="home">
+                    <i class="fas fa-home mr-2"></i>Home
+                </a>
+                <a href="#" class="nav-link text-white hover:text-blue-300 transition-colors" data-section="explore">
+                    <i class="fas fa-compass mr-2"></i>Explore
+                </a>
+                <a href="#" class="nav-link text-white hover:text-blue-300 transition-colors relative" data-section="messages">
+                    <i class="fas fa-envelope mr-2"></i>Messages
+                    <span class="notification-badge absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                </a>
+                <a href="#" class="nav-link text-white hover:text-blue-300 transition-colors relative" data-section="notifications">
+                    <i class="fas fa-bell mr-2"></i>Notifications
+                    <span class="notification-badge absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">7</span>
+                </a>
+                <a href="#" class="nav-link text-white hover:text-blue-300 transition-colors" data-section="profile">
+                    <i class="fas fa-user mr-2"></i>Profile
+                </a>
+            </div>
+            
+            <!-- Auth Buttons -->
+            <div id="auth-buttons" class="flex items-center space-x-4">
+                <button id="login-btn" class="glass-card px-6 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-20 transition-all ripple">
+                    Login
+                </button>
+                <button id="register-btn" class="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-2 rounded-lg text-white hover:from-blue-700 hover:to-blue-900 transition-all ripple">
+                    Sign Up
+                </button>
+            </div>
+            
+            <!-- User Menu (Hidden by default) -->
+            <div id="user-menu" class="hidden relative">
+                <button class="flex items-center space-x-3 glass-card px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition-all">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="Profile" class="w-8 h-8 rounded-full">
+                        <div class="online-indicator"></div>
+                    </div>
+                    <span class="text-white font-medium">John Doe</span>
+                    <i class="fas fa-chevron-down text-white text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="pt-20 relative z-10">
+        <!-- Home Section -->
+        <section id="home-section" class="section active">
+            <div class="max-w-7xl mx-auto px-6 py-12">
+                <!-- Hero Banner -->
+                <div class="text-center mb-16 slide-in">
+                    <h1 class="text-6xl md:text-8xl font-black text-white mb-6 leading-tight">
+                        Connect.<br>
+                        <span class="gradient-text">Share.</span><br>
+                        Inspire.
+                    </h1>
+                    <p class="text-xl text-white text-opacity-80 mb-8 max-w-2xl mx-auto">
+                        Join the next generation social platform where creativity meets community. Share your story, discover amazing content, and connect with people who matter.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button class="bg-gradient-to-r from-blue-600 to-blue-800 px-8 py-4 rounded-xl text-white font-semibold text-lg hover:from-blue-700 hover:to-blue-900 transition-all hover-lift ripple">
+                            <i class="fas fa-rocket mr-2"></i>Get Started
+                        </button>
+                        <button class="glass-card px-8 py-4 rounded-xl text-white font-semibold text-lg hover:bg-white hover:bg-opacity-20 transition-all hover-lift ripple">
+                            <i class="fas fa-play mr-2"></i>Watch Demo
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Stories Section -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-white mb-6">Stories</h2>
+                    <div class="flex gap-4 overflow-x-auto pb-4">
+                        <div class="story-item flex-shrink-0 cursor-pointer" onclick="viewStory(1)">
+                            <div class="relative">
+                                <img src="https://i.pravatar.cc/150?img=10" alt="Story" class="w-20 h-20 rounded-full border-4 border-blue-500 p-1">
+                                <div class="live-indicator absolute -bottom-1 left-1/2 transform -translate-x-1/2">
+                                    <i class="fas fa-circle text-xs mr-1"></i>LIVE
+                                </div>
+                            </div>
+                            <p class="text-white text-sm text-center mt-2">Sarah</p>
+                        </div>
+                        
+                        <div class="story-item flex-shrink-0 cursor-pointer" onclick="viewStory(2)">
+                            <img src="https://i.pravatar.cc/150?img=11" alt="Story" class="w-20 h-20 rounded-full border-4 border-blue-500 p-1">
+                            <p class="text-white text-sm text-center mt-2">Mike</p>
+                        </div>
+                        
+                        <div class="story-item flex-shrink-0 cursor-pointer" onclick="viewStory(3)">
+                            <img src="https://i.pravatar.cc/150?img=12" alt="Story" class="w-20 h-20 rounded-full border-4 border-blue-500 p-1">
+                            <p class="text-white text-sm text-center mt-2">Emma</p>
+                        </div>
+                        
+                        <div class="story-item flex-shrink-0 cursor-pointer" onclick="viewStory(4)">
+                            <img src="https://i.pravatar.cc/150?img=13" alt="Story" class="w-20 h-20 rounded-full border-4 border-blue-500 p-1">
+                            <p class="text-white text-sm text-center mt-2">Alex</p>
+                        </div>
+                        
+                        <div class="story-item flex-shrink-0 cursor-pointer" onclick="addStory()">
+                            <div class="w-20 h-20 rounded-full border-4 border-dashed border-blue-500 p-1 flex items-center justify-center bg-white bg-opacity-10">
+                                <i class="fas fa-plus text-white text-2xl"></i>
+                            </div>
+                            <p class="text-white text-sm text-center mt-2">Add Story</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature Cards -->
+                <div class="grid md:grid-cols-3 gap-8 mb-16">
+                    <div class="glass-card p-8 rounded-2xl hover-lift fade-in">
+                        <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fas fa-users text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Connect</h3>
+                        <p class="text-white text-opacity-80">Build meaningful connections with people who share your interests and passions.</p>
+                    </div>
+                    
+                    <div class="glass-card p-8 rounded-2xl hover-lift fade-in" style="animation-delay: 0.2s;">
+                        <div class="w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fas fa-share-alt text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Share</h3>
+                        <p class="text-white text-opacity-80">Share your stories, photos, and moments with a community that cares.</p>
+                    </div>
+                    
+                    <div class="glass-card p-8 rounded-2xl hover-lift fade-in" style="animation-delay: 0.4s;">
+                        <div class="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fas fa-bolt text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Engage</h3>
+                        <p class="text-white text-opacity-80">Like, comment, share, and react to content that moves you.</p>
+                    </div>
+                </div>
+                
+                <!-- AI Assistant Feature -->
+                <div class="glass-card p-6 rounded-2xl mb-8 border-2 border-purple-500 border-opacity-30">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-robot text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-semibold">SocialWave AI Assistant</h3>
+                            <p class="text-purple-300 text-sm">Ask me anything or get content suggestions!</p>
+                        </div>
+                        <div class="ml-auto">
+                            <span class="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs px-2 py-1 rounded-full">NEW</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <input type="text" placeholder="Ask AI for help with your post, trends, or anything..." class="flex-1 bg-white bg-opacity-10 border border-purple-400 border-opacity-30 rounded-full px-6 py-3 text-white placeholder-purple-200 placeholder-opacity-60 focus:outline-none focus:border-purple-400" id="ai-input">
+                        <button class="bg-gradient-to-r from-purple-600 to-pink-600 px-6 py-3 rounded-full text-white hover:from-purple-700 hover:to-pink-700 transition-all" onclick="askAI()">
+                            <i class="fas fa-magic mr-2"></i>Ask AI
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Create Post Section -->
+                <div class="glass-card p-6 rounded-2xl mb-8">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face" alt="Your avatar" class="w-12 h-12 rounded-full">
+                        <input type="text" placeholder="What's on your mind?" class="flex-1 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-full px-6 py-3 text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:border-blue-400" onclick="openCreatePostModal()">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-white transition-colors" onclick="openCreatePostModal()">
+                                <i class="fas fa-image text-blue-400"></i>
+                                <span>Photo</span>
+                            </button>
+                            <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-white transition-colors" onclick="openCreatePostModal()">
+                                <i class="fas fa-video text-green-400"></i>
+                                <span>Video</span>
+                            </button>
+                            <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-white transition-colors" onclick="openCreatePostModal()">
+                                <i class="fas fa-smile text-yellow-400"></i>
+                                <span>Feeling</span>
+                            </button>
+                            <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-white transition-colors" onclick="openLiveStreamModal()">
+                                <i class="fas fa-broadcast-tower text-red-400"></i>
+                                <span>Go Live</span>
+                            </button>
+                        </div>
+                        <button class="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-2 rounded-full text-white hover:from-blue-700 hover:to-blue-900 transition-all" onclick="openCreatePostModal()">
+                            Post
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Trending Feed Preview -->
+                <div class="glass-card p-8 rounded-2xl">
+                    <h2 class="text-3xl font-bold text-white mb-8 text-center">Trending Now</h2>
+                    <div id="trending-posts" class="space-y-6">
+                        <!-- Sample Post 1 -->
+                        <div class="glass-card p-6 rounded-2xl hover-lift fade-in">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://i.pravatar.cc/150?img=1" alt="Sarah Johnson" class="w-12 h-12 rounded-full">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2">
+                                        <h3 class="text-white font-semibold">Sarah Johnson</h3>
+                                        <i class="fas fa-check-circle text-blue-400 text-sm"></i>
+                                    </div>
+                                    <p class="text-white text-opacity-60 text-sm">2 hours ago</p>
+                                </div>
+                            </div>
+                            <p class="text-white mb-4">Just finished an amazing sunset photoshoot! The colors were absolutely breathtaking 🌅✨</p>
+                            <img src="https://picsum.photos/600/400?random=10" alt="Post image" class="w-full h-64 object-cover rounded-lg mb-4 cursor-pointer" onclick="openLightbox('https://picsum.photos/800/600?random=10')">
+                            
+                            <!-- Like and Comment Buttons -->
+                            <div class="flex items-center justify-between pt-4 border-t border-white border-opacity-10">
+                                <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-red-400 transition-colors" onclick="toggleLike(this)">
+                                    <i class="fas fa-heart"></i>
+                                    <span>127</span>
+                                </button>
+                                <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-blue-400 transition-colors" onclick="toggleComments(this)">
+                                    <i class="fas fa-comment"></i>
+                                    <span>8</span>
+                                </button>
+                                <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-green-400 transition-colors" onclick="sharePost(this)">
+                                    <i class="fas fa-share"></i>
+                                    <span>3</span>
+                                </button>
+                            </div>
+                            
+                            <!-- Comments Section -->
+                            <div class="comments-section mt-4 hidden">
+                                <div class="space-y-3 mb-4">
+                                    <div class="flex gap-3 p-3 bg-white bg-opacity-5 rounded-lg">
+                                        <img src="https://i.pravatar.cc/150?img=2" alt="Mike" class="w-8 h-8 rounded-full">
+                                        <div>
+                                            <p class="text-white font-medium text-sm">Mike Chen</p>
+                                            <p class="text-white text-opacity-80 text-sm">Absolutely stunning! 😍</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="You" class="w-8 h-8 rounded-full">
+                                    <input type="text" placeholder="Write a comment..." class="flex-1 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-full px-4 py-2 text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:border-blue-400" onkeypress="handleCommentSubmit(event, this)">
+                                    <button class="text-blue-400 hover:text-blue-300 transition-colors px-3" onclick="submitComment(this)">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sample Post 2 -->
+                        <div class="glass-card p-6 rounded-2xl hover-lift fade-in">
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="https://i.pravatar.cc/150?img=3" alt="Emma Wilson" class="w-12 h-12 rounded-full">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2">
+                                        <h3 class="text-white font-semibold">Emma Wilson</h3>
+                                        <i class="fas fa-check-circle text-blue-400 text-sm"></i>
+                                    </div>
+                                    <p class="text-white text-opacity-60 text-sm">4 hours ago</p>
+                                </div>
+                            </div>
+                            <p class="text-white mb-4">Coffee and code - the perfect combination for a productive morning ☕💻</p>
+                            <img src="https://picsum.photos/600/400?random=20" alt="Post image" class="w-full h-64 object-cover rounded-lg mb-4 cursor-pointer" onclick="openLightbox('https://picsum.photos/800/600?random=20')">
+                            
+                            <!-- Like and Comment Buttons -->
+                            <div class="flex items-center justify-between pt-4 border-t border-white border-opacity-10">
+                                <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-red-400 transition-colors" onclick="toggleLike(this)">
+                                    <i class="fas fa-heart"></i>
+                                    <span>89</span>
+                                </button>
+                                <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-blue-400 transition-colors" onclick="toggleComments(this)">
+                                    <i class="fas fa-comment"></i>
+                                    <span>5</span>
+                                </button>
+                                <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-green-400 transition-colors" onclick="sharePost(this)">
+                                    <i class="fas fa-share"></i>
+                                    <span>2</span>
+                                </button>
+                            </div>
+                            
+                            <!-- Comments Section -->
+                            <div class="comments-section mt-4 hidden">
+                                <div class="space-y-3 mb-4">
+                                    <div class="flex gap-3 p-3 bg-white bg-opacity-5 rounded-lg">
+                                        <img src="https://i.pravatar.cc/150?img=4" alt="Alex" class="w-8 h-8 rounded-full">
+                                        <div>
+                                            <p class="text-white font-medium text-sm">Alex Rodriguez</p>
+                                            <p class="text-white text-opacity-80 text-sm">Same here! What are you working on?</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="You" class="w-8 h-8 rounded-full">
+                                    <input type="text" placeholder="Write a comment..." class="flex-1 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-full px-4 py-2 text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:border-blue-400" onkeypress="handleCommentSubmit(event, this)">
+                                    <button class="text-blue-400 hover:text-blue-300 transition-colors px-3" onclick="submitComment(this)">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="infinite-scroll-loading" id="home-loading">
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Profile Section -->
+        <section id="profile-section" class="section">
+            <div class="max-w-4xl mx-auto px-6 py-12">
+                <!-- Profile Header -->
+                <div class="glass-card p-8 rounded-2xl mb-8 slide-in">
+                    <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=face" alt="Profile" class="w-32 h-32 rounded-full border-4 border-white border-opacity-20">
+                            <div class="online-indicator"></div>
+                            <button class="absolute bottom-0 right-0 bg-gradient-to-r from-blue-600 to-blue-800 p-2 rounded-full text-white hover:from-blue-700 hover:to-blue-900 transition-all">
+                                <i class="fas fa-camera text-sm"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="flex-1 text-center md:text-left">
+                            <div class="flex items-center justify-center md:justify-start gap-3 mb-2">
+                                <h1 class="text-3xl font-bold text-white">John Doe</h1>
+                                <i class="fas fa-check-circle text-blue-400" title="Verified"></i>
+                            </div>
+                            <p class="text-white text-opacity-80 mb-4">Creative designer & storyteller. Passionate about connecting people through amazing experiences. 🚀</p>
+                            
+                            <!-- Stats -->
+                            <div class="grid grid-cols-4 gap-4 mb-6">
+                                <div class="stats-card">
+                                    <div class="text-2xl font-bold text-white">127</div>
+                                    <div class="text-sm text-white text-opacity-60">Posts</div>
+                                </div>
+                                <div class="stats-card">
+                                    <div class="text-2xl font-bold text-white">2.4K</div>
+                                    <div class="text-sm text-white text-opacity-60">Followers</div>
+                                </div>
+                                <div class="stats-card">
+                                    <div class="text-2xl font-bold text-white">892</div>
+                                    <div class="text-sm text-white text-opacity-60">Following</div>
+                                </div>
+                                <div class="stats-card">
+                                    <div class="text-2xl font-bold text-white">15</div>
+                                    <div class="text-sm text-white text-opacity-60">Level</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Followed by friends -->
+                            <div class="flex items-center justify-center md:justify-start gap-2 mb-4">
+                                <div class="flex -space-x-2">
+                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=32&h=32&fit=crop&crop=face" alt="Friend" class="w-8 h-8 rounded-full border-2 border-white">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" alt="Friend" class="w-8 h-8 rounded-full border-2 border-white">
+                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face" alt="Friend" class="w-8 h-8 rounded-full border-2 border-white">
+                                </div>
+                                <span class="text-white text-opacity-60 text-sm">Followed by Sarah, Mike, and 12 others</span>
+                            </div>
+                            
+                            <!-- Achievements -->
+                            <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                                <span class="achievement-badge">
+                                    <i class="fas fa-star"></i>Influencer
+                                </span>
+                                <span class="achievement-badge">
+                                    <i class="fas fa-fire"></i>Trending Creator
+                                </span>
+                                <span class="achievement-badge">
+                                    <i class="fas fa-heart"></i>Community Lover
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Profile Tabs -->
+                <div class="glass-card rounded-2xl overflow-hidden">
+                    <div class="flex border-b border-white border-opacity-10">
+                        <button class="profile-tab active flex-1 px-6 py-4 text-white font-medium hover:bg-white hover:bg-opacity-10 transition-all" data-tab="posts">
+                            <i class="fas fa-th-large mr-2"></i>Posts
+                        </button>
+                        <button class="profile-tab flex-1 px-6 py-4 text-white text-opacity-60 font-medium hover:bg-white hover:bg-opacity-10 transition-all" data-tab="media">
+                            <i class="fas fa-images mr-2"></i>Media
+                        </button>
+                        <button class="profile-tab flex-1 px-6 py-4 text-white text-opacity-60 font-medium hover:bg-white hover:bg-opacity-10 transition-all" data-tab="achievements">
+                            <i class="fas fa-trophy mr-2"></i>Achievements
+                        </button>
+                        <button class="profile-tab flex-1 px-6 py-4 text-white text-opacity-60 font-medium hover:bg-white hover:bg-opacity-10 transition-all" data-tab="analytics">
+                            <i class="fas fa-chart-line mr-2"></i>Analytics
+                        </button>
+                    </div>
+                    
+                    <div class="p-8">
+                        <div id="posts-tab" class="tab-content">
+                            <div id="profile-posts" class="grid md:grid-cols-3 gap-4">
+                                <!-- Profile posts will be loaded here -->
+                            </div>
+                            <div class="infinite-scroll-loading" id="profile-loading">
+                                <div class="loading-spinner"></div>
+                            </div>
+                        </div>
+                        
+                        <div id="media-tab" class="tab-content hidden">
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                <div class="relative aspect-square cursor-pointer hover-lift" onclick="openLightbox('https://picsum.photos/800/800?random=1')">
+                                    <img src="https://picsum.photos/300/300?random=1" alt="Media" class="w-full h-full object-cover rounded-lg">
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 hover:opacity-100 rounded-lg">
+                                        <div class="text-white flex space-x-4">
+                                            <span><i class="fas fa-heart"></i> 87</span>
+                                            <span><i class="fas fa-comment"></i> 12</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative aspect-square cursor-pointer hover-lift" onclick="openLightbox('https://picsum.photos/800/800?random=2')">
+                                    <img src="https://picsum.photos/300/300?random=2" alt="Media" class="w-full h-full object-cover rounded-lg">
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 hover:opacity-100 rounded-lg">
+                                        <div class="text-white flex space-x-4">
+                                            <span><i class="fas fa-heart"></i> 124</span>
+                                            <span><i class="fas fa-comment"></i> 18</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative aspect-square cursor-pointer hover-lift" onclick="openLightbox('https://picsum.photos/800/800?random=3')">
+                                    <img src="https://picsum.photos/300/300?random=3" alt="Media" class="w-full h-full object-cover rounded-lg">
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 hover:opacity-100 rounded-lg">
+                                        <div class="text-white flex space-x-4">
+                                            <span><i class="fas fa-heart"></i> 56</span>
+                                            <span><i class="fas fa-comment"></i> 8</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative aspect-square cursor-pointer hover-lift" onclick="openLightbox('https://picsum.photos/800/800?random=4')">
+                                    <img src="https://picsum.photos/300/300?random=4" alt="Media" class="w-full h-full object-cover rounded-lg">
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 hover:opacity-100 rounded-lg">
+                                        <div class="text-white flex space-x-4">
+                                            <span><i class="fas fa-heart"></i> 210</span>
+                                            <span><i class="fas fa-comment"></i> 32</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative aspect-square cursor-pointer hover-lift" onclick="openLightbox('https://picsum.photos/800/800?random=5')">
+                                    <img src="https://picsum.photos/300/300?random=5" alt="Media" class="w-full h-full object-cover rounded-lg">
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 hover:opacity-100 rounded-lg">
+                                        <div class="text-white flex space-x-4">
+                                            <span><i class="fas fa-heart"></i> 78</span>
+                                            <span><i class="fas fa-comment"></i> 5</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative aspect-square cursor-pointer hover-lift" onclick="playVideo()">
+                                    <div class="w-full h-full bg-gray-700 flex items-center justify-center rounded-lg relative">
+                                        <i class="fas fa-play-circle text-4xl text-white"></i>
+                                        <span class="absolute bottom-2 right-2 text-xs bg-black bg-opacity-70 px-2 py-1 rounded">2:34</span>
+                                    </div>
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 hover:opacity-100 rounded-lg">
+                                        <div class="text-white flex space-x-4">
+                                            <span><i class="fas fa-heart"></i> 145</span>
+                                            <span><i class="fas fa-comment"></i> 24</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="achievements-tab" class="tab-content hidden">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="glass-card p-6 rounded-xl">
+                                    <div class="flex items-center gap-4 mb-4">
+                                        <div class="w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center">
+                                            <i class="fas fa-star text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-white font-semibold">Influencer</h3>
+                                            <p class="text-white text-opacity-60 text-sm">Reached 1K followers</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="glass-card p-6 rounded-xl">
+                                    <div class="flex items-center gap-4 mb-4">
+                                        <div class="w-12 h-12 bg-gradient-to-r from-red-400 to-pink-500 rounded-xl flex items-center justify-center">
+                                            <i class="fas fa-fire text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-white font-semibold">Trending Creator</h3>
+                                            <p class="text-white text-opacity-60 text-sm">Post reached trending</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="analytics-tab" class="tab-content hidden">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="glass-card p-6 rounded-xl">
+                                    <h3 class="text-white font-semibold text-lg mb-4 flex items-center">
+                                        <i class="fas fa-chart-line text-blue-400 mr-2"></i>
+                                        Engagement Overview
+                                    </h3>
+                                    <div class="space-y-4">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-white text-opacity-80">Total Posts</span>
+                                            <span class="text-white font-bold">127</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-white text-opacity-80">Total Likes</span>
+                                            <span class="text-white font-bold">15,420</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-white text-opacity-80">Total Comments</span>
+                                            <span class="text-white font-bold">3,240</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-white text-opacity-80">Engagement Rate</span>
+                                            <span class="text-green-400 font-bold">8.7%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="glass-card p-6 rounded-xl">
+                                    <h3 class="text-white font-semibold text-lg mb-4 flex items-center">
+                                        <i class="fas fa-users text-purple-400 mr-2"></i>
+                                        Audience Growth
+                                    </h3>
+                                    <div class="space-y-4">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-white text-opacity-80">This Week</span>
+                                            <span class="text-green-400 font-bold">+12.3%</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-white text-opacity-80">Reach</span>
+                                            <span class="text-white font-bold">45.2K</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-white text-opacity-80">Best Time</span>
+                                            <span class="text-blue-400 font-bold">7:00 PM</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-white text-opacity-80">Top Post</span>
+                                            <span class="text-yellow-400 font-bold">Sunset Tips</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Messages Section -->
+        <section id="messages-section" class="section">
+            <div class="max-w-7xl mx-auto px-6 py-12">
+                <div class="glass-card rounded-2xl overflow-hidden h-[600px] flex">
+                    <!-- Chat List -->
+                    <div class="w-1/3 border-r border-white border-opacity-10 flex flex-col">
+                        <div class="p-6 border-b border-white border-opacity-10">
+                            <h2 class="text-2xl font-bold text-white mb-4">Messages</h2>
+                            <div class="relative">
+                                <input type="text" placeholder="Search conversations..." class="w-full bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg px-4 py-2 text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:border-blue-400">
+                                <i class="fas fa-search absolute right-3 top-3 text-white text-opacity-60"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="flex-1 overflow-y-auto" id="chat-list">
+                            <!-- Chat conversations will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Window -->
+                    <div class="flex-1 flex flex-col" id="chat-window">
+                        <div class="p-6 border-b border-white border-opacity-10 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="relative">
+                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Contact" class="w-10 h-10 rounded-full">
+                                    <div class="online-indicator"></div>
+                                </div>
+                                <div>
+                                    <h3 class="text-white font-semibold">Sarah Johnson</h3>
+                                    <p class="text-white text-opacity-60 text-sm">Online</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-3">
+                                <button class="p-2 text-white text-opacity-60 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-lg transition-all">
+                                    <i class="fas fa-phone"></i>
+                                </button>
+                                <button class="p-2 text-white text-opacity-60 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-lg transition-all">
+                                    <i class="fas fa-video"></i>
+                                </button>
+                                <button class="p-2 text-white text-opacity-60 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-lg transition-all">
+                                    <i class="fas fa-info-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="flex-1 overflow-y-auto p-6" id="chat-messages">
+                            <!-- Chat messages will be loaded here -->
+                        </div>
+                        
+                        <div class="p-6 border-t border-white border-opacity-10">
+                            <div class="flex items-center gap-3">
+                                <button class="p-2 text-white text-opacity-60 hover:text-white transition-all" onclick="toggleVoiceMessage()">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                <button class="p-2 text-white text-opacity-60 hover:text-white transition-all">
+                                    <i class="fas fa-smile"></i>
+                                </button>
+                                <input type="text" placeholder="Type a message..." class="message-input flex-1" id="message-input">
+                                <button class="bg-gradient-to-r from-blue-600 to-blue-800 p-3 rounded-full text-white hover:from-blue-700 hover:to-blue-900 transition-all" id="send-message">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Notifications Section -->
+        <section id="notifications-section" class="section">
+            <div class="max-w-4xl mx-auto px-6 py-12">
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="flex items-center justify-between mb-8">
+                        <h2 class="text-3xl font-bold text-white">Notifications</h2>
+                        <button class="text-blue-400 hover:text-blue-300 transition-colors" id="mark-all-read">
+                            Mark all as read
+                        </button>
+                    </div>
+                    
+                    <div id="notifications-list" class="space-y-4">
+                        <!-- Notifications will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Explore Section -->
+        <section id="explore-section" class="section">
+            <div class="max-w-7xl mx-auto px-6 py-12">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-white mb-4">Explore</h2>
+                    <p class="text-white text-opacity-80 text-lg">Discover amazing content and connect with new people</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="explore-content">
+                    <!-- Explore content will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Floating Action Button -->
+    <button class="floating-btn ripple" id="create-post-btn">
+        <i class="fas fa-plus"></i>
+    </button>
+    
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scroll-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+    
+    <!-- Create Post Modal -->
+    <div id="create-post-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="glass-card p-8 rounded-2xl w-full max-w-2xl mx-4 slide-in max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-white">Create Post</h2>
+                <button class="text-white text-opacity-60 hover:text-white transition-colors" onclick="closeCreatePostModal()">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="flex items-center gap-3 mb-4">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face" alt="Your avatar" class="w-12 h-12 rounded-full">
+                <div>
+                    <h3 class="text-white font-semibold">John Doe</h3>
+                    <select class="bg-white bg-opacity-10 border border-white border-opacity-20 rounded px-2 py-1 text-white text-sm">
+                        <option value="public">🌍 Public</option>
+                        <option value="friends">👥 Friends</option>
+                        <option value="private">🔒 Only me</option>
+                    </select>
+                </div>
+            </div>
+            
+            <textarea placeholder="What's on your mind?" class="w-full bg-transparent border-none text-white text-lg placeholder-white placeholder-opacity-60 focus:outline-none resize-none mb-4" rows="4" id="post-content"></textarea>
+            
+            <!-- Mood Selector -->
+            <div class="mb-4">
+                <p class="text-white text-sm mb-2">How are you feeling?</p>
+                <div class="mood-selector">
+                    <div class="mood-option" data-mood="happy">😊 Happy</div>
+                    <div class="mood-option" data-mood="excited">🎉 Excited</div>
+                    <div class="mood-option" data-mood="grateful">🙏 Grateful</div>
+                    <div class="mood-option" data-mood="creative">🎨 Creative</div>
+                    <div class="mood-option" data-mood="motivated">💪 Motivated</div>
+                </div>
+            </div>
+            
+            <!-- Photo Upload Area -->
+            <div class="border-2 border-dashed border-white border-opacity-20 rounded-xl p-8 mb-4 text-center" id="photo-upload-area">
+                <i class="fas fa-images text-4xl text-white text-opacity-40 mb-4"></i>
+                <p class="text-white text-opacity-60 mb-4">Add photos to your post</p>
+                <button class="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-2 rounded-lg text-white hover:from-blue-700 hover:to-blue-900 transition-all" onclick="selectPhotos()">
+                    Choose Photos
+                </button>
+                <input type="file" id="photo-input" multiple accept="image/*" class="hidden" onchange="handlePhotoSelection(event)">
+            </div>
+            
+            <!-- Selected Photos Preview -->
+            <div id="selected-photos" class="mb-4 hidden">
+                <div class="photo-gallery" id="photo-preview"></div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-white transition-colors" onclick="selectPhotos()">
+                        <i class="fas fa-image text-blue-400"></i>
+                        <span>Photo</span>
+                    </button>
+                    <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-white transition-colors">
+                        <i class="fas fa-video text-green-400"></i>
+                        <span>Video</span>
+                    </button>
+                    <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-white transition-colors">
+                        <i class="fas fa-map-marker-alt text-red-400"></i>
+                        <span>Location</span>
+                    </button>
+                </div>
+                <button class="bg-gradient-to-r from-blue-600 to-blue-800 px-8 py-3 rounded-full text-white font-semibold hover:from-blue-700 hover:to-blue-900 transition-all" onclick="publishPost()">
+                    Post
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Authentication Modal -->
+    <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="glass-card p-8 rounded-2xl w-full max-w-md mx-4 slide-in">
+            <!-- Login Form -->
+            <div id="login-form">
+                <h2 class="text-2xl font-bold text-white mb-6 text-center">Welcome Back</h2>
+                <form class="space-y-4">
+                    <div>
+                        <input type="email" placeholder="Email address" class="w-full bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg px-4 py-3 text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:border-blue-400" required>
+                    </div>
+                    <div>
+                        <input type="password" placeholder="Password" class="w-full bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg px-4 py-3 text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:border-blue-400" required>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-800 py-3 rounded-lg text-white font-semibold hover:from-blue-700 hover:to-blue-900 transition-all ripple">
+                        <span class="button-text">Sign In</span>
+                        <div class="loading-spinner hidden"></div>
+                    </button>
+                </form>
+                <p class="text-white text-opacity-60 text-center mt-4">
+                    Don't have an account? 
+                    <button class="text-blue-400 hover:text-blue-300 transition-colors" onclick="switchToRegister()">Sign up</button>
+                </p>
+            </div>
+            
+            <!-- Register Form -->
+            <div id="register-form" class="hidden">
+                <h2 class="text-2xl font-bold text-white mb-6 text-center">Join SocialWave</h2>
+                <form class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="text" placeholder="First name" class="bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg px-4 py-3 text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:border-blue-400" required>
+                        <input type="text" placeholder="Last name" class="bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg px-4 py-3 text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:border-blue-400" required>
+                    </div>
+                    <div>
+                        <input type="email" placeholder="Email address" class="w-full bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg px-4 py-3 text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:border-blue-400" required>
+                    </div>
+                    <div>
+                        <input type="password" placeholder="Password" class="w-full bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg px-4 py-3 text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:border-blue-400" required>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-800 py-3 rounded-lg text-white font-semibold hover:from-blue-700 hover:to-blue-900 transition-all ripple">
+                        <span class="button-text">Create Account</span>
+                        <div class="loading-spinner hidden"></div>
+                    </button>
+                </form>
+                <p class="text-white text-opacity-60 text-center mt-4">
+                    Already have an account? 
+                    <button class="text-blue-400 hover:text-blue-300 transition-colors" onclick="switchToLogin()">Sign in</button>
+                </p>
+            </div>
+            
+            <button class="absolute top-4 right-4 text-white text-opacity-60 hover:text-white transition-colors" onclick="closeAuthModal()">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Story Viewer -->
+    <div id="story-viewer" class="story-viewer">
+        <div class="story-content">
+            <div class="story-progress">
+                <div class="story-progress-bar" id="story-progress-bar"></div>
+            </div>
+            <img id="story-image" src="" alt="Story" class="w-full h-full object-cover">
+            <button class="absolute top-4 right-4 text-white text-2xl" onclick="closeStoryViewer()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Live Stream Modal -->
+    <div id="live-stream-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="glass-card p-8 rounded-2xl w-full max-w-2xl mx-4 slide-in">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-white">Go Live</h2>
+                <button class="text-white text-opacity-60 hover:text-white transition-colors" onclick="closeLiveStreamModal()">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="bg-black rounded-xl p-8 mb-6 text-center">
+                <div class="w-24 h-24 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-video text-white text-3xl"></i>
+                </div>
+                <h3 class="text-white text-xl font-semibold mb-2">Camera Preview</h3>
+                <p class="text-white text-opacity-60">Your live stream will appear here</p>
+            </div>
+            
+            <div class="space-y-4 mb-6">
+                <input type="text" placeholder="Stream title..." class="w-full bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg px-4 py-3 text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:border-red-400">
+                <textarea placeholder="Stream description..." class="w-full bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg px-4 py-3 text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:border-red-400 resize-none" rows="3"></textarea>
+                
+                <div class="flex items-center gap-4">
+                    <label class="flex items-center gap-2 text-white">
+                        <input type="checkbox" class="rounded">
+                        <span>Save stream recording</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-white">
+                        <input type="checkbox" class="rounded">
+                        <span>Enable chat</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-white transition-colors">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </button>
+                    <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-white transition-colors">
+                        <i class="fas fa-share"></i>
+                        <span>Share</span>
+                    </button>
+                </div>
+                <button class="bg-gradient-to-r from-red-500 to-pink-500 px-8 py-3 rounded-full text-white font-semibold hover:from-red-600 hover:to-pink-600 transition-all" onclick="startLiveStream()">
+                    <i class="fas fa-broadcast-tower mr-2"></i>Go Live
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Photo Lightbox -->
+    <div id="photo-lightbox" class="photo-lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()">
+                <i class="fas fa-times"></i>
+            </button>
+            <img id="lightbox-image" src="" alt="Photo">
+        </div>
+    </div>
+    
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+    
+    <script>
+        // Global variables
+        let currentUser = null;
+        let currentSection = 'home';
+        let posts = [];
+        let notifications = [];
+        let messages = [];
+        let conversations = [];
+        let selectedPhotos = [];
+        let selectedMood = null;
+        
+        // Sample data with enhanced features
+        const samplePosts = [
+            {
+                id: 1,
+                user: {
+                    name: 'Sarah Johnson',
+                    avatar: 'https://i.pravatar.cc/150?img=1',
+                    verified: true
+                },
+                content: 'Just finished an amazing sunset photoshoot! The colors were absolutely breathtaking 🌅✨',
+                images: [
+                    'https://picsum.photos/600/400?random=10',
+                    'https://picsum.photos/600/400?random=11',
+                    'https://picsum.photos/600/400?random=12'
+                ],
+                time: '2 hours ago',
+                likes: 127,
+                comments: [
+                    {
+                        id: 1,
+                        user: 'Mike Chen',
+                        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face',
+                        content: 'Absolutely stunning! 😍',
+                        time: '1 hour ago'
+                    },
+                    {
+                        id: 2,
+                        user: 'Emma Wilson',
+                        avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face',
+                        content: 'The lighting is perfect! What camera did you use?',
+                        time: '45 minutes ago'
+                    }
+                ],
+                shares: 8,
+                liked: false,
+                mood: 'creative'
+            },
+            {
+                id: 2,
+                user: {
+                    name: 'Mike Chen',
+                    avatar: 'https://i.pravatar.cc/150?img=2',
+                    verified: false
+                },
+                content: 'Working on some exciting new projects! Can\'t wait to share what we\'ve been building 🚀',
+                images: [
+                    'https://picsum.photos/600/400?random=20'
+                ],
+                time: '4 hours ago',
+                likes: 89,
+                comments: [
+                    {
+                        id: 1,
+                        user: 'Sarah Johnson',
+                        avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=32&h=32&fit=crop&crop=face',
+                        content: 'Can\'t wait to see it! 🎉',
+                        time: '3 hours ago'
+                    }
+                ],
+                shares: 12,
+                liked: true,
+                mood: 'excited'
+            },
+            {
+                id: 3,
+                user: {
+                    name: 'Emma Wilson',
+                    avatar: 'https://i.pravatar.cc/150?img=3',
+                    verified: true
+                },
+                content: 'Coffee and code - the perfect combination for a productive morning ☕💻',
+                images: [
+                    'https://picsum.photos/600/400?random=30',
+                    'https://picsum.photos/600/400?random=31'
+                ],
+                time: '6 hours ago',
+                likes: 156,
+                comments: [
+                    {
+                        id: 1,
+                        user: 'John Doe',
+                        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face',
+                        content: 'Same here! What are you working on?',
+                        time: '5 hours ago'
+                    }
+                ],
+                shares: 5,
+                liked: false,
+                mood: 'motivated'
+            },
+            {
+                id: 4,
+                user: {
+                    name: 'Alex Rodriguez',
+                    avatar: 'https://i.pravatar.cc/150?img=4',
+                    verified: true
+                },
+                content: 'Amazing day at the beach! The sunset was absolutely perfect 🌅🏖️',
+                images: [
+                    'https://picsum.photos/600/400?random=40'
+                ],
+                time: '8 hours ago',
+                likes: 89,
+                comments: [
+                    {
+                        id: 1,
+                        user: 'Beach Lover',
+                        avatar: 'https://i.pravatar.cc/150?img=15',
+                        content: 'Looks amazing! Which beach is this?',
+                        time: '6 hours ago'
+                    }
+                ],
+                shares: 3,
+                liked: false,
+                mood: 'happy'
+            },
+            {
+                id: 5,
+                user: {
+                    name: 'Maya Patel',
+                    avatar: 'https://i.pravatar.cc/150?img=5',
+                    verified: false
+                },
+                content: 'Just finished my latest digital artwork! What do you think? 🎨✨',
+                images: [
+                    'https://picsum.photos/600/400?random=50',
+                    'https://picsum.photos/600/400?random=51'
+                ],
+                time: '12 hours ago',
+                likes: 234,
+                comments: [
+                    {
+                        id: 1,
+                        user: 'Art Enthusiast',
+                        avatar: 'https://i.pravatar.cc/150?img=16',
+                        content: 'This is incredible! Love the colors!',
+                        time: '10 hours ago'
+                    },
+                    {
+                        id: 2,
+                        user: 'Creative Mind',
+                        avatar: 'https://i.pravatar.cc/150?img=17',
+                        content: 'Amazing work! How long did this take?',
+                        time: '9 hours ago'
+                    }
+                ],
+                shares: 15,
+                liked: true,
+                mood: 'creative'
+            },
+            {
+                id: 6,
+                user: {
+                    name: 'David Kim',
+                    avatar: 'https://i.pravatar.cc/150?img=6',
+                    verified: true
+                },
+                content: 'Exploring the city today! Found some amazing street art 🏙️🎭',
+                images: [
+                    'https://picsum.photos/600/400?random=60',
+                    'https://picsum.photos/600/400?random=61',
+                    'https://picsum.photos/600/400?random=62'
+                ],
+                time: '1 day ago',
+                likes: 178,
+                comments: [
+                    {
+                        id: 1,
+                        user: 'Street Art Fan',
+                        avatar: 'https://i.pravatar.cc/150?img=18',
+                        content: 'Love the urban vibes! 🔥',
+                        time: '20 hours ago'
+                    }
+                ],
+                shares: 7,
+                liked: false,
+                mood: 'excited'
+            }
+        ];
+        
+        const sampleNotifications = [
+            {
+                id: 1,
+                type: 'like',
+                user: 'Sarah Johnson',
+                avatar: 'https://i.pravatar.cc/150?img=1',
+                message: 'liked your post',
+                time: '5 minutes ago',
+                read: false
+            },
+            {
+                id: 2,
+                type: 'follow',
+                user: 'Mike Chen',
+                avatar: 'https://i.pravatar.cc/150?img=2',
+                message: 'started following you',
+                time: '1 hour ago',
+                read: false
+            },
+            {
+                id: 3,
+                type: 'comment',
+                user: 'Emma Wilson',
+                avatar: 'https://i.pravatar.cc/150?img=3',
+                message: 'commented on your post',
+                time: '2 hours ago',
+                read: true
+            }
+        ];
+        
+        const sampleConversations = [
+            {
+                id: 1,
+                user: {
+                    name: 'Sarah Johnson',
+                    avatar: 'https://i.pravatar.cc/150?img=1',
+                    online: true
+                },
+                lastMessage: 'Hey! How are you doing?',
+                time: '2m ago',
+                unread: 2
+            },
+            {
+                id: 2,
+                user: {
+                    name: 'Mike Chen',
+                    avatar: 'https://i.pravatar.cc/150?img=2',
+                    online: false
+                },
+                lastMessage: 'Thanks for the help!',
+                time: '1h ago',
+                unread: 0
+            },
+            {
+                id: 3,
+                user: {
+                    name: 'Emma Wilson',
+                    avatar: 'https://i.pravatar.cc/150?img=3',
+                    online: true
+                },
+                lastMessage: 'See you tomorrow!',
+                time: '3h ago',
+                unread: 1
+            }
+        ];
+        
+        const sampleMessages = [
+            {
+                id: 1,
+                sender: 'Sarah Johnson',
+                content: 'Hey! How are you doing?',
+                time: '2:30 PM',
+                sent: false,
+                type: 'text'
+            },
+            {
+                id: 2,
+                sender: 'You',
+                content: 'I\'m doing great! Just working on some new projects. How about you?',
+                time: '2:32 PM',
+                sent: true,
+                type: 'text'
+            },
+            {
+                id: 3,
+                sender: 'Sarah Johnson',
+                content: 'That sounds exciting! I\'d love to hear more about it.',
+                time: '2:35 PM',
+                sent: false,
+                type: 'text'
+            },
+            {
+                id: 4,
+                sender: 'You',
+                content: '',
+                time: '2:40 PM',
+                sent: true,
+                type: 'voice',
+                duration: '0:15'
+            }
+        ];
+        
+        // Custom cursor
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        
+        // Navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const section = link.dataset.section;
+                switchSection(section);
+            });
+        });
+        
+        function switchSection(section) {
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`[data-section="${section}"]`).classList.add('active');
+            
+            // Update sections
+            document.querySelectorAll('.section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            document.getElementById(`${section}-section`).classList.add('active');
+            
+            currentSection = section;
+            
+            // Load section-specific content
+            if (section === 'home') {
+                loadTrendingPosts();
+            } else if (section === 'profile') {
+                loadProfilePosts();
+            } else if (section === 'messages') {
+                loadConversations();
+                loadMessages();
+            } else if (section === 'notifications') {
+                loadNotifications();
+            } else if (section === 'explore') {
+                loadExploreContent();
+            }
+        }
+        
+        // Authentication
+        document.getElementById('login-btn').addEventListener('click', () => {
+            document.getElementById('auth-modal').classList.remove('hidden');
+        });
+        
+        document.getElementById('register-btn').addEventListener('click', () => {
+            document.getElementById('auth-modal').classList.remove('hidden');
+            switchToRegister();
+        });
+        
+        function switchToLogin() {
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('register-form').classList.add('hidden');
+        }
+        
+        function switchToRegister() {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('register-form').classList.remove('hidden');
+        }
+        
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+        }
+        
+        // Handle form submissions
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const button = form.querySelector('button[type="submit"]');
+                const buttonText = button.querySelector('.button-text');
+                const spinner = button.querySelector('.loading-spinner');
+                
+                // Show loading
+                buttonText.classList.add('hidden');
+                spinner.classList.remove('hidden');
+                button.disabled = true;
+                
+                // Simulate API call
+                setTimeout(() => {
+                    // Hide loading
+                    buttonText.classList.remove('hidden');
+                    spinner.classList.add('hidden');
+                    button.disabled = false;
+                    
+                    // Simulate successful login
+                    currentUser = {
+                        name: 'John Doe',
+                        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face'
+                    };
+                    
+                    // Update UI
+                    document.getElementById('auth-buttons').classList.add('hidden');
+                    document.getElementById('user-menu').classList.remove('hidden');
+                    closeAuthModal();
+                    
+                    showToast('Welcome to SocialWave! 🎉', 'success');
+                }, 2000);
+            });
+        });
+        
+        // Create Post Modal
+        function openCreatePostModal() {
+            document.getElementById('create-post-modal').classList.remove('hidden');
+        }
+        
+        function closeCreatePostModal() {
+            document.getElementById('create-post-modal').classList.add('hidden');
+            // Reset form
+            document.getElementById('post-content').value = '';
+            selectedPhotos = [];
+            selectedMood = null;
+            document.getElementById('selected-photos').classList.add('hidden');
+            document.querySelectorAll('.mood-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+        }
+        
+        // Photo selection
+        function selectPhotos() {
+            document.getElementById('photo-input').click();
+        }
+        
+        function handlePhotoSelection(event) {
+            const files = Array.from(event.target.files);
+            selectedPhotos = [];
+            
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    selectedPhotos.push(e.target.result);
+                    updatePhotoPreview();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        function updatePhotoPreview() {
+            const container = document.getElementById('photo-preview');
+            const selectedPhotosDiv = document.getElementById('selected-photos');
+            
+            if (selectedPhotos.length > 0) {
+                selectedPhotosDiv.classList.remove('hidden');
+                container.innerHTML = '';
+                
+                // Set gallery class based on number of photos
+                let galleryClass = 'single';
+                if (selectedPhotos.length === 2) galleryClass = 'double';
+                else if (selectedPhotos.length === 3) galleryClass = 'triple';
+                else if (selectedPhotos.length >= 4) galleryClass = 'quad';
+                
+                container.className = `photo-gallery ${galleryClass}`;
+                
+                selectedPhotos.slice(0, 4).forEach((photo, index) => {
+                    const img = document.createElement('img');
+                    img.src = photo;
+                    img.alt = `Selected photo ${index + 1}`;
+                    img.onclick = () => openLightbox(photo);
+                    container.appendChild(img);
+                });
+            } else {
+                selectedPhotosDiv.classList.add('hidden');
+            }
+        }
+        
+        // Mood selection
+        document.querySelectorAll('.mood-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.mood-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                option.classList.add('selected');
+                selectedMood = option.dataset.mood;
+            });
+        });
+        
+        // Publish post
+        function publishPost() {
+            const content = document.getElementById('post-content').value.trim();
+            
+            if (content || selectedPhotos.length > 0) {
+                const newPost = {
+                    id: Date.now(),
+                    user: {
+                        name: 'John Doe',
+                        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face',
+                        verified: true
+                    },
+                    content: content,
+                    images: selectedPhotos.slice(),
+                    time: 'Just now',
+                    likes: 0,
+                    comments: [],
+                    shares: 0,
+                    liked: false,
+                    mood: selectedMood
+                };
+                
+                samplePosts.unshift(newPost);
+                
+                // Add to trending posts container immediately
+                const container = document.getElementById('trending-posts');
+                if (container) {
+                    const postElement = createPostElement(newPost);
+                    container.insertBefore(postElement, container.firstChild);
+                }
+                
+                closeCreatePostModal();
+                showToast('Post published successfully! 🎉', 'success');
+            } else {
+                showToast('Please add some content or photos to your post', 'error');
+            }
+        }
+        
+        // Load content functions
+        function loadTrendingPosts() {
+            const container = document.getElementById('trending-posts');
+            container.innerHTML = '';
+            
+            samplePosts.forEach((post, index) => {
+                setTimeout(() => {
+                    const postElement = createPostElement(post);
+                    container.appendChild(postElement);
+                }, index * 200);
+            });
+        }
+        
+        function loadProfilePosts() {
+            const container = document.getElementById('profile-posts');
+            container.innerHTML = '';
+            
+            const profilePostImages = [
+                'https://picsum.photos/300/300?random=200',
+                'https://picsum.photos/300/300?random=201',
+                'https://picsum.photos/300/300?random=202',
+                'https://picsum.photos/300/300?random=203',
+                'https://picsum.photos/300/300?random=204',
+                'https://picsum.photos/300/300?random=205',
+                'https://picsum.photos/300/300?random=206',
+                'https://picsum.photos/300/300?random=207',
+                'https://picsum.photos/300/300?random=208'
+            ];
+            
+            profilePostImages.forEach((imageUrl, i) => {
+                const postCard = document.createElement('div');
+                postCard.className = 'post-card glass-card rounded-xl overflow-hidden hover-lift fade-in';
+                postCard.style.animationDelay = `${i * 0.1}s`;
+                postCard.innerHTML = `
+                    <img src="${imageUrl}" alt="Profile Post ${i + 1}" class="w-full h-48 object-cover cursor-pointer" onclick="openLightbox('${imageUrl.replace('300', '800')}')">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between text-white text-sm">
+                            <span><i class="fas fa-heart mr-1"></i>${Math.floor(Math.random() * 200) + 50}</span>
+                            <span><i class="fas fa-comment mr-1"></i>${Math.floor(Math.random() * 50) + 10}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(postCard);
+            });
+        }
+        
+        function loadConversations() {
+            const container = document.getElementById('chat-list');
+            container.innerHTML = '';
+            
+            sampleConversations.forEach((conversation, index) => {
+                setTimeout(() => {
+                    const conversationElement = document.createElement('div');
+                    conversationElement.className = 'flex items-center gap-3 p-4 hover:bg-white hover:bg-opacity-5 cursor-pointer transition-all';
+                    conversationElement.innerHTML = `
+                        <div class="relative">
+                            <img src="${conversation.user.avatar}" alt="${conversation.user.name}" class="w-12 h-12 rounded-full">
+                            ${conversation.user.online ? '<div class="online-indicator"></div>' : ''}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-white font-medium truncate">${conversation.user.name}</h3>
+                                <span class="text-white text-opacity-60 text-xs">${conversation.time}</span>
+                            </div>
+                            <p class="text-white text-opacity-60 text-sm truncate">${conversation.lastMessage}</p>
+                        </div>
+                        ${conversation.unread > 0 ? `<div class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">${conversation.unread}</div>` : ''}
+                    `;
+                    container.appendChild(conversationElement);
+                }, index * 100);
+            });
+        }
+        
+        function loadMessages() {
+            const container = document.getElementById('chat-messages');
+            container.innerHTML = '';
+            
+            sampleMessages.forEach((message, index) => {
+                setTimeout(() => {
+                    const messageElement = document.createElement('div');
+                    messageElement.className = `flex ${message.sent ? 'justify-end' : 'justify-start'} mb-4`;
+                    
+                    if (message.type === 'voice') {
+                        messageElement.innerHTML = `
+                            <div class="voice-message ${message.sent ? 'sent' : 'received'}">
+                                <button class="text-white hover:text-blue-300 transition-colors">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <div class="voice-waveform">
+                                    <div class="voice-bar"></div>
+                                    <div class="voice-bar"></div>
+                                    <div class="voice-bar"></div>
+                                    <div class="voice-bar"></div>
+                                    <div class="voice-bar"></div>
+                                </div>
+                                <span class="text-white text-opacity-60 text-sm">${message.duration}</span>
+                            </div>
+                        `;
+                    } else {
+                        messageElement.innerHTML = `
+                            <div class="chat-bubble ${message.sent ? 'sent' : 'received'} fade-in">
+                                ${message.content}
+                                <div class="text-xs opacity-70 mt-1">${message.time}</div>
+                            </div>
+                        `;
+                    }
+                    container.appendChild(messageElement);
+                }, index * 300);
+            });
+            
+            // Add typing indicator
+            setTimeout(() => {
+                const typingElement = document.createElement('div');
+                typingElement.className = 'flex justify-start mb-4';
+                typingElement.innerHTML = `
+                    <div class="chat-bubble received flex items-center gap-1">
+                        <div class="typing-indicator"></div>
+                        <div class="typing-indicator"></div>
+                        <div class="typing-indicator"></div>
+                    </div>
+                `;
+                container.appendChild(typingElement);
+            }, sampleMessages.length * 300 + 1000);
+        }
+        
+        function loadNotifications() {
+            const container = document.getElementById('notifications-list');
+            container.innerHTML = '';
+            
+            sampleNotifications.forEach((notification, index) => {
+                setTimeout(() => {
+                    const notificationElement = document.createElement('div');
+                    notificationElement.className = `glass-card p-4 rounded-xl flex items-center gap-4 hover-lift fade-in ${notification.read ? 'opacity-60' : ''}`;
+                    notificationElement.innerHTML = `
+                        <img src="${notification.avatar}" alt="${notification.user}" class="w-12 h-12 rounded-full">
+                        <div class="flex-1">
+                            <p class="text-white">
+                                <span class="font-semibold">${notification.user}</span>
+                                ${notification.message}
+                            </p>
+                            <p class="text-white text-opacity-60 text-sm">${notification.time}</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            ${notification.type === 'follow' ? '<button class="bg-gradient-to-r from-blue-600 to-blue-800 px-4 py-2 rounded-lg text-white text-sm hover:from-blue-700 hover:to-blue-900 transition-all">Follow Back</button>' : ''}
+                            <div class="text-2xl">
+                                ${notification.type === 'like' ? '❤️' : notification.type === 'follow' ? '👥' : '💬'}
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(notificationElement);
+                }, index * 150);
+            });
+        }
+        
+        function loadExploreContent() {
+            const container = document.getElementById('explore-content');
+            container.innerHTML = '';
+            
+            const exploreData = [
+                { title: 'Stunning Landscape Photography', category: 'Photography', image: 'https://picsum.photos/400/250?random=100' },
+                { title: 'Modern Web Development', category: 'Technology', image: 'https://picsum.photos/400/250?random=101' },
+                { title: 'Creative Digital Art', category: 'Art & Design', image: 'https://picsum.photos/400/250?random=102' },
+                { title: 'Travel Adventures', category: 'Travel', image: 'https://picsum.photos/400/250?random=103' },
+                { title: 'Food & Cooking Tips', category: 'Lifestyle', image: 'https://picsum.photos/400/250?random=104' },
+                { title: 'Fitness & Wellness', category: 'Health', image: 'https://picsum.photos/400/250?random=105' }
+            ];
+            
+            exploreData.forEach((item, i) => {
+                const exploreCard = document.createElement('div');
+                exploreCard.className = 'glass-card rounded-2xl overflow-hidden hover-lift fade-in';
+                exploreCard.style.animationDelay = `${i * 0.1}s`;
+                exploreCard.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}" class="w-full h-48 object-cover cursor-pointer" onclick="openLightbox('${item.image.replace('250', '800')}')">
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">${item.category}</span>
+                        </div>
+                        <h3 class="text-white font-semibold text-lg mb-2">${item.title}</h3>
+                        <p class="text-white text-opacity-80 mb-4">Discover incredible stories and connect with amazing people in our community.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <img src="https://i.pravatar.cc/150?img=${i + 20}" alt="Creator" class="w-8 h-8 rounded-full">
+                                <span class="text-white text-sm">Creator ${i + 1}</span>
+                            </div>
+                            <div class="flex items-center gap-4 text-white text-opacity-60 text-sm">
+                                <span><i class="fas fa-heart mr-1"></i>${Math.floor(Math.random() * 500) + 100}</span>
+                                <span><i class="fas fa-comment mr-1"></i>${Math.floor(Math.random() * 100) + 20}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(exploreCard);
+            });
+        }
+        
+        function createPostElement(post) {
+            const postElement = document.createElement('div');
+            postElement.className = 'glass-card p-6 rounded-2xl hover-lift fade-in';
+            
+            // Create photo gallery HTML
+            let photosHTML = '';
+            if (post.images && post.images.length > 0) {
+                let galleryClass = 'single';
+                if (post.images.length === 2) galleryClass = 'double';
+                else if (post.images.length === 3) galleryClass = 'triple';
+                else if (post.images.length >= 4) galleryClass = 'quad';
+                
+                photosHTML = `<div class="photo-gallery ${galleryClass}">`;
+                post.images.slice(0, 4).forEach((image, index) => {
+                    photosHTML += `<img src="${image}" alt="Post image ${index + 1}" onclick="openLightbox('${image}')">`;
+                });
+                photosHTML += '</div>';
+            }
+            
+            // Create mood indicator
+            const moodEmojis = {
+                happy: '😊',
+                excited: '🎉',
+                grateful: '🙏',
+                creative: '🎨',
+                motivated: '💪'
+            };
+            
+            const moodHTML = post.mood ? `<span class="text-sm text-white text-opacity-60">is feeling ${post.mood} ${moodEmojis[post.mood]}</span>` : '';
+            
+            postElement.innerHTML = `
+                <div class="flex items-center gap-3 mb-4">
+                    <img src="${post.user.avatar}" alt="${post.user.name}" class="w-12 h-12 rounded-full">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-white font-semibold">${post.user.name}</h3>
+                            ${post.user.verified ? '<i class="fas fa-check-circle text-blue-400 text-sm"></i>' : ''}
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <p class="text-white text-opacity-60 text-sm">${post.time}</p>
+                            ${moodHTML}
+                        </div>
+                    </div>
+                    <button class="text-white text-opacity-60 hover:text-white transition-colors">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                </div>
+                
+                <p class="text-white mb-4">${post.content}</p>
+                
+                ${photosHTML}
+                
+                <div class="flex items-center justify-between pt-4 border-t border-white border-opacity-10">
+                    <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-red-400 transition-colors ${post.liked ? 'text-red-400' : ''}" onclick="toggleLike(${post.id}, this)">
+                        <i class="fas fa-heart"></i>
+                        <span>${post.likes}</span>
+                    </button>
+                    <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-blue-400 transition-colors" onclick="toggleComments(${post.id})">
+                        <i class="fas fa-comment"></i>
+                        <span>${post.comments.length}</span>
+                    </button>
+                    <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-green-400 transition-colors" onclick="sharePost(${post.id})">
+                        <i class="fas fa-share"></i>
+                        <span>${post.shares}</span>
+                    </button>
+                    <button class="flex items-center gap-2 text-white text-opacity-60 hover:text-yellow-400 transition-colors" onclick="showReactionPicker(${post.id}, this)">
+                        <i class="fas fa-smile"></i>
+                        <span>React</span>
+                    </button>
+                </div>
+                
+                <!-- Comments Section -->
+                <div class="comments-section" id="comments-${post.id}">
+                    <div class="space-y-3" id="comments-list-${post.id}">
+                        ${post.comments.map(comment => `
+                            <div class="comment">
+                                <img src="${comment.avatar}" alt="${comment.user}" class="w-8 h-8 rounded-full">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="text-white font-medium text-sm">${comment.user}</span>
+                                        <span class="text-white text-opacity-40 text-xs">${comment.time}</span>
+                                    </div>
+                                    <p class="text-white text-opacity-80 text-sm">${comment.content}</p>
+                                </div>
+                                <button class="text-white text-opacity-40 hover:text-red-400 transition-colors text-sm">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="comment-input">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="Your avatar" class="w-8 h-8 rounded-full">
+                        <input type="text" placeholder="Write a comment..." class="comment-input-field" onkeypress="handleCommentSubmit(event, ${post.id})">
+                        <button class="text-blue-400 hover:text-blue-300 transition-colors" onclick="submitComment(${post.id})">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            return postElement;
+        }
+        
+        // Post interactions
+        function toggleLike(postId, button) {
+            const post = samplePosts.find(p => p.id === postId);
+            if (post) {
+                post.liked = !post.liked;
+                post.likes += post.liked ? 1 : -1;
+                
+                const count = button.querySelector('span');
+                
+                if (post.liked) {
+                    button.classList.add('text-red-400');
+                    button.classList.remove('text-white', 'text-opacity-60');
+                    
+                    // Create floating heart animation
+                    createReactionAnimation(button, '❤️');
+                    
+                    // Add pulse animation to button
+                    button.style.transform = 'scale(1.2)';
+                    setTimeout(() => {
+                        button.style.transform = 'scale(1)';
+                    }, 200);
+                    
+                    showToast('Post liked! ❤️', 'success');
+                } else {
+                    button.classList.remove('text-red-400');
+                    button.classList.add('text-white', 'text-opacity-60');
+                    showToast('Like removed', 'info');
+                }
+                
+                if (count) {
+                    count.textContent = post.likes;
+                }
+            }
+        }
+        
+        // Legacy like function for existing posts
+        function toggleLike(element) {
+            if (typeof element === 'number') {
+                return toggleLike(element, arguments[1]);
+            }
+            
+            const isLiked = element.classList.contains('text-red-400');
+            const count = element.querySelector('span');
+            let currentCount = parseInt(count.textContent);
+            
+            if (isLiked) {
+                element.classList.remove('text-red-400');
+                element.classList.add('text-white', 'text-opacity-60');
+                count.textContent = currentCount - 1;
+                showToast('Like removed', 'info');
+            } else {
+                element.classList.add('text-red-400');
+                element.classList.remove('text-white', 'text-opacity-60');
+                count.textContent = currentCount + 1;
+                createReactionAnimation(element, '❤️');
+                showToast('Post liked! ❤️', 'success');
+            }
+        }
+        
+        function toggleComments(postId) {
+            if (typeof postId === 'object') {
+                // Legacy support for existing posts
+                const commentsSection = postId.closest('.glass-card').querySelector('.comments-section');
+                const isHidden = commentsSection.classList.contains('hidden');
+                
+                if (isHidden) {
+                    commentsSection.classList.remove('hidden');
+                    showToast('Comments opened 💬', 'info');
+                } else {
+                    commentsSection.classList.add('hidden');
+                }
+                return;
+            }
+            
+            const commentsSection = document.getElementById(`comments-${postId}`);
+            if (commentsSection) {
+                const isExpanded = commentsSection.classList.contains('expanded');
+                commentsSection.classList.toggle('expanded');
+                
+                if (!isExpanded) {
+                    showToast('Comments opened 💬', 'info');
+                    setTimeout(() => {
+                        const commentInput = commentsSection.querySelector('.comment-input-field');
+                        if (commentInput) {
+                            commentInput.focus();
+                        }
+                    }, 300);
+                }
+            }
+        }
+        
+        function sharePost(postId) {
+            const post = samplePosts.find(p => p.id === postId);
+            if (post) {
+                post.shares += 1;
+                showToast('Post shared! 🔄', 'success');
+                loadTrendingPosts(); // Reload to update share count
+            }
+        }
+        
+        function showReactionPicker(postId, button) {
+            const reactions = ['👍', '❤️', '😂', '😮', '😢', '😡'];
+            const randomReaction = reactions[Math.floor(Math.random() * reactions.length)];
+            createReactionAnimation(button, randomReaction);
+            showToast(`You reacted with ${randomReaction}`, 'info');
+        }
+        
+        function createReactionAnimation(element, emoji) {
+            const rect = element.getBoundingClientRect();
+            const animation = document.createElement('div');
+            animation.className = 'reaction-animation';
+            animation.textContent = emoji;
+            animation.style.left = rect.left + rect.width / 2 + 'px';
+            animation.style.top = rect.top + 'px';
+            
+            document.body.appendChild(animation);
+            
+            setTimeout(() => {
+                animation.remove();
+            }, 2000);
+        }
+        
+        function handleCommentSubmit(event, postId) {
+            if (event.key === 'Enter') {
+                submitComment(postId);
+            }
+        }
+        
+        function submitComment(postId) {
+            if (typeof postId === 'object') {
+                // Legacy support for existing posts
+                const button = postId;
+                const input = button.previousElementSibling;
+                const comment = input.value.trim();
+                
+                if (comment) {
+                    const commentsSection = button.closest('.comments-section');
+                    const commentsList = commentsSection.querySelector('.space-y-3');
+                    
+                    const newCommentDiv = document.createElement('div');
+                    newCommentDiv.className = 'flex gap-3 p-3 bg-white bg-opacity-5 rounded-lg fade-in';
+                    newCommentDiv.innerHTML = `
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="You" class="w-8 h-8 rounded-full">
+                        <div>
+                            <p class="text-white font-medium text-sm">John Doe</p>
+                            <p class="text-white text-opacity-80 text-sm">${comment}</p>
+                        </div>
+                    `;
+                    
+                    commentsList.appendChild(newCommentDiv);
+                    input.value = '';
+                    showToast('Comment added! 💬', 'success');
+                }
+                return;
+            }
+            
+            const commentsSection = document.getElementById(`comments-${postId}`);
+            const input = commentsSection ? commentsSection.querySelector('.comment-input-field') : null;
+            
+            if (!input) {
+                showToast('Comment input not found', 'error');
+                return;
+            }
+            
+            const comment = input.value.trim();
+            
+            if (comment) {
+                const post = samplePosts.find(p => p.id === postId);
+                if (post) {
+                    const newComment = {
+                        id: Date.now(),
+                        user: 'John Doe',
+                        avatar: 'https://i.pravatar.cc/150?img=99',
+                        content: comment,
+                        time: 'Just now'
+                    };
+                    
+                    post.comments.push(newComment);
+                    input.value = '';
+                    
+                    // Add comment to UI
+                    const commentsList = document.getElementById(`comments-list-${postId}`);
+                    if (commentsList) {
+                        const commentElement = document.createElement('div');
+                        commentElement.className = 'comment fade-in';
+                        commentElement.innerHTML = `
+                            <img src="${newComment.avatar}" alt="${newComment.user}" class="w-8 h-8 rounded-full">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-white font-medium text-sm">${newComment.user}</span>
+                                    <span class="text-white text-opacity-40 text-xs">${newComment.time}</span>
+                                </div>
+                                <p class="text-white text-opacity-80 text-sm">${newComment.content}</p>
+                            </div>
+                            <button class="text-white text-opacity-40 hover:text-red-400 transition-colors text-sm" onclick="likeComment(this)">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        `;
+                        commentsList.appendChild(commentElement);
+                        
+                        // Scroll to new comment
+                        commentElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                    
+                    // Update comment count in all post instances
+                    const commentButtons = document.querySelectorAll(`[onclick*="toggleComments(${postId})"]`);
+                    commentButtons.forEach(btn => {
+                        const countSpan = btn.querySelector('span');
+                        if (countSpan) {
+                            countSpan.textContent = post.comments.length;
+                        }
+                    });
+                    
+                    showToast('Comment added! 💬', 'success');
+                }
+            } else {
+                showToast('Please write a comment first', 'error');
+            }
+        }
+        
+        // Like comment function
+        function likeComment(button) {
+            const isLiked = button.classList.contains('text-red-400');
+            
+            if (isLiked) {
+                button.classList.remove('text-red-400');
+                button.classList.add('text-white', 'text-opacity-40');
+            } else {
+                button.classList.add('text-red-400');
+                button.classList.remove('text-white', 'text-opacity-40');
+                createReactionAnimation(button, '❤️');
+            }
+            
+            // Add pulse animation
+            button.style.transform = 'scale(1.3)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+            }, 200);
+        }
+        
+        // Story viewer
+        function viewStory(storyId) {
+            const storyViewer = document.getElementById('story-viewer');
+            const storyImage = document.getElementById('story-image');
+            const progressBar = document.getElementById('story-progress-bar');
+            
+            const stories = [
+                'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=600&fit=crop',
+                'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop',
+                'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=600&fit=crop'
+            ];
+            
+            storyImage.src = stories[storyId - 1];
+            storyViewer.style.display = 'flex';
+            
+            // Animate progress bar
+            progressBar.style.width = '0%';
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+            }, 100);
+            
+            // Auto close after 5 seconds
+            setTimeout(() => {
+                closeStoryViewer();
+            }, 5000);
+        }
+        
+        function closeStoryViewer() {
+            document.getElementById('story-viewer').style.display = 'none';
+        }
+        
+        // Photo lightbox
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('photo-lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            
+            lightboxImage.src = imageSrc;
+            lightbox.style.display = 'flex';
+        }
+        
+        function closeLightbox() {
+            document.getElementById('photo-lightbox').style.display = 'none';
+        }
+        
+        // Voice message toggle
+        function toggleVoiceMessage() {
+            showToast('Voice message feature coming soon! 🎤', 'info');
+        }
+        
+        // AI Assistant
+        function askAI() {
+            const input = document.getElementById('ai-input');
+            const question = input.value.trim();
+            
+            if (question) {
+                const responses = [
+                    "🎨 Try posting about your creative process! People love behind-the-scenes content.",
+                    "📸 Golden hour photos always perform well! Try shooting during sunset.",
+                    "💡 Share a tip or life hack - educational content gets great engagement!",
+                    "🎵 Music-related posts are trending right now. Share your favorite song!",
+                    "🍕 Food posts always get love! Share what you're cooking today.",
+                    "🌟 Motivational quotes with personal stories perform amazingly well.",
+                    "🎯 Ask your followers a question to boost engagement!",
+                    "📚 Share what you're learning - people love growth content!",
+                    "🎪 Behind-the-scenes content of your daily life is very engaging.",
+                    "🚀 Share your goals and progress - it inspires others!"
+                ];
+                
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                showToast(`AI Suggestion: ${randomResponse}`, 'info');
+                input.value = '';
+                
+                // Add AI suggestion to post content
+                setTimeout(() => {
+                    if (confirm('Would you like to use this AI suggestion for your post?')) {
+                        openCreatePostModal();
+                        document.getElementById('post-content').value = randomResponse.replace(/[🎨📸💡🎵🍕🌟🎯📚🎪🚀]\s/, '');
+                    }
+                }, 2000);
+            } else {
+                showToast('Please ask me something! 🤖', 'error');
+            }
+        }
+        
+        // Live Stream Modal
+        function openLiveStreamModal() {
+            document.getElementById('live-stream-modal').classList.remove('hidden');
+        }
+        
+        function closeLiveStreamModal() {
+            document.getElementById('live-stream-modal').classList.add('hidden');
+        }
+        
+        function startLiveStream() {
+            showToast('🔴 Live stream started! You are now broadcasting to your followers.', 'success');
+            closeLiveStreamModal();
+            
+            // Add live indicator to navigation
+            const liveIndicator = document.createElement('div');
+            liveIndicator.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 z-50';
+            liveIndicator.innerHTML = `
+                <div class="bg-gradient-to-r from-red-500 to-pink-500 px-6 py-2 rounded-full text-white font-semibold flex items-center gap-2 animate-pulse">
+                    <div class="w-3 h-3 bg-white rounded-full animate-ping"></div>
+                    <span>LIVE</span>
+                    <span class="text-sm opacity-80">127 viewers</span>
+                </div>
+            `;
+            document.body.appendChild(liveIndicator);
+            
+            // Remove after 10 seconds (demo)
+            setTimeout(() => {
+                liveIndicator.remove();
+                showToast('Live stream ended. Thanks for broadcasting! 📺', 'info');
+            }, 10000);
+        }
+        
+        // Advanced Search
+        function performAdvancedSearch(query) {
+            const searchResults = [
+                { type: 'user', name: 'Sarah Johnson', followers: '2.4K' },
+                { type: 'hashtag', tag: '#photography', posts: '1.2M' },
+                { type: 'post', content: 'Amazing sunset photos...', likes: 127 },
+                { type: 'trend', topic: 'AI Technology', engagement: '89%' }
+            ];
+            
+            return searchResults.filter(result => 
+                result.name?.toLowerCase().includes(query.toLowerCase()) ||
+                result.tag?.toLowerCase().includes(query.toLowerCase()) ||
+                result.content?.toLowerCase().includes(query.toLowerCase()) ||
+                result.topic?.toLowerCase().includes(query.toLowerCase())
+            );
+        }
+        
+        // Content Recommendation Engine
+        function getContentRecommendations() {
+            const recommendations = [
+                {
+                    type: 'trending',
+                    title: 'AI Art is Taking Over',
+                    engagement: '94%',
+                    category: 'Technology'
+                },
+                {
+                    type: 'popular',
+                    title: 'Sustainable Living Tips',
+                    engagement: '87%',
+                    category: 'Lifestyle'
+                },
+                {
+                    type: 'rising',
+                    title: 'Remote Work Productivity',
+                    engagement: '76%',
+                    category: 'Business'
+                }
+            ];
+            
+            return recommendations;
+        }
+        
+        // Analytics Dashboard
+        function generateAnalytics() {
+            return {
+                totalPosts: 127,
+                totalLikes: 15420,
+                totalComments: 3240,
+                totalShares: 890,
+                engagementRate: '8.7%',
+                topPerformingPost: 'Sunset Photography Tips',
+                bestPostingTime: '7:00 PM',
+                audienceGrowth: '+12.3%',
+                reachThisWeek: '45.2K'
+            };
+        }
+        
+        // Smart Notifications
+        function createSmartNotification(type, data) {
+            const notifications = {
+                milestone: `🎉 Congratulations! You've reached ${data.count} ${data.type}!`,
+                trending: `🔥 Your post "${data.title}" is trending with ${data.engagement}% engagement!`,
+                mention: `👋 ${data.user} mentioned you in their post about ${data.topic}`,
+                achievement: `🏆 Achievement unlocked: ${data.badge}! You're now a ${data.level}`,
+                suggestion: `💡 Based on your activity, try posting about ${data.topic} for better engagement`
+            };
+            
+            return notifications[type] || 'New notification';
+        }
+        
+        // Real-time Collaboration
+        function startCollaboration(postId, collaborators) {
+            showToast(`🤝 Started collaboration with ${collaborators.length} people on your post!`, 'success');
+            
+            // Simulate real-time editing
+            const collaborationIndicator = document.createElement('div');
+            collaborationIndicator.className = 'fixed bottom-20 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg';
+            collaborationIndicator.innerHTML = `
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                    <span class="text-sm">${collaborators[0]} is editing...</span>
+                </div>
+            `;
+            document.body.appendChild(collaborationIndicator);
+            
+            setTimeout(() => {
+                collaborationIndicator.remove();
+            }, 5000);
+        }
+        
+        // Enhanced AI Input Handler
+        document.getElementById('ai-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                askAI();
+            }
+        });
+        
+        // Profile tabs
+        document.querySelectorAll('.profile-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update tab buttons
+                document.querySelectorAll('.profile-tab').forEach(t => {
+                    t.classList.remove('active');
+                    t.classList.add('text-opacity-60');
+                });
+                tab.classList.add('active');
+                tab.classList.remove('text-opacity-60');
+                
+                // Update tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                document.getElementById(`${tab.dataset.tab}-tab`).classList.remove('hidden');
+            });
+        });
+        
+        // Floating action button
+        document.getElementById('create-post-btn').addEventListener('click', () => {
+            openCreatePostModal();
+        });
+        
+        // Scroll to top
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Infinite scroll
+        function setupInfiniteScroll(containerId, loadFunction) {
+            let loading = false;
+            
+            window.addEventListener('scroll', () => {
+                if (loading) return;
+                
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                
+                const scrollTop = window.pageYOffset;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+                
+                if (scrollTop + windowHeight >= documentHeight - 200) {
+                    loading = true;
+                    const loadingIndicator = document.getElementById(`${containerId.split('-')[0]}-loading`);
+                    if (loadingIndicator) {
+                        loadingIndicator.classList.add('visible');
+                    }
+                    
+                    setTimeout(() => {
+                        loadFunction();
+                        loading = false;
+                        if (loadingIndicator) {
+                            loadingIndicator.classList.remove('visible');
+                        }
+                    }, 1000);
+                }
+            });
+        }
+        
+        // Message sending
+        document.getElementById('send-message').addEventListener('click', sendMessage);
+        document.getElementById('message-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            
+            if (message) {
+                const container = document.getElementById('chat-messages');
+                const messageElement = document.createElement('div');
+                messageElement.className = 'flex justify-end mb-4';
+                messageElement.innerHTML = `
+                    <div class="chat-bubble sent fade-in">
+                        ${message}
+                        <div class="text-xs opacity-70 mt-1">Now</div>
+                    </div>
+                `;
+                container.appendChild(messageElement);
+                container.scrollTop = container.scrollHeight;
+                input.value = '';
+                
+                // Simulate response
+                setTimeout(() => {
+                    const responseElement = document.createElement('div');
+                    responseElement.className = 'flex justify-start mb-4';
+                    responseElement.innerHTML = `
+                        <div class="chat-bubble received fade-in">
+                            Thanks for your message! 😊
+                            <div class="text-xs opacity-70 mt-1">Now</div>
+                        </div>
+                    `;
+                    container.appendChild(responseElement);
+                    container.scrollTop = container.scrollHeight;
+                }, 1000);
+            }
+        }
+        
+        // Toast notifications
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            
+            document.getElementById('toast-container').appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch (e.key) {
+                    case '1':
+                        e.preventDefault();
+                        switchSection('home');
+                        break;
+                    case '2':
+                        e.preventDefault();
+                        switchSection('explore');
+                        break;
+                    case '3':
+                        e.preventDefault();
+                        switchSection('messages');
+                        break;
+                    case '4':
+                        e.preventDefault();
+                        switchSection('notifications');
+                        break;
+                    case '5':
+                        e.preventDefault();
+                        switchSection('profile');
+                        break;
+                }
+            }
+        });
+        
+        // Mark all notifications as read
+        document.getElementById('mark-all-read').addEventListener('click', () => {
+            sampleNotifications.forEach(notification => {
+                notification.read = true;
+            });
+            loadNotifications();
+            showToast('All notifications marked as read', 'success');
+        });
+        
+        // Simulated real-time notifications
+        setInterval(() => {
+            const messages = [
+                'Someone liked your post ❤️',
+                'You have a new follower! 👥',
+                'New comment on your post 💬',
+                'Your post is trending! 🔥',
+                'Someone shared your post! 🔄',
+                'New story from your friend 📸'
+            ];
+            
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            showToast(randomMessage, 'info');
+        }, 30000);
+        
+
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            setupInfiniteScroll('trending-posts', () => {});
+            setupInfiniteScroll('profile-posts', loadProfilePosts);
+        });
+        
+        // Close modals when clicking outside
+        document.getElementById('auth-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeAuthModal();
+            }
+        });
+        
+        document.getElementById('create-post-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeCreatePostModal();
+            }
+        });
+        
+        document.getElementById('photo-lightbox').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeLightbox();
+            }
+        });
+        
+        document.getElementById('story-viewer').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeStoryViewer();
+            }
+        });
+        
+        document.getElementById('live-stream-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeLiveStreamModal();
+            }
+        });
+        
+        // ESC key to close modals
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeAuthModal();
+                closeCreatePostModal();
+                closeLightbox();
+                closeStoryViewer();
+                closeLiveStreamModal();
+            }
+        });
+        
+        // Add Story function
+        function addStory() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*,video/*';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    showToast('Story uploaded successfully! 📸', 'success');
+                    // Add story to beginning of stories list
+                    const storiesContainer = document.querySelector('.flex');
+                    const newStory = document.createElement('div');
+                    newStory.className = 'story-item flex-shrink-0 cursor-pointer';
+                    newStory.innerHTML = `
+                        <img src="https://i.pravatar.cc/150?img=50" alt="Your Story" class="w-20 h-20 rounded-full border-4 border-green-500 p-1">
+                        <p class="text-white text-sm text-center mt-2">Your Story</p>
+                    `;
+                    storiesContainer.insertBefore(newStory, storiesContainer.lastElementChild);
+                }
+            };
+            input.click();
+        }
+        
+        // Play Video function
+        function playVideo() {
+            showToast('🎬 Video player opening...', 'info');
+            // Simulate video player
+            setTimeout(() => {
+                const videoModal = document.createElement('div');
+                videoModal.className = 'fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center';
+                videoModal.innerHTML = `
+                    <div class="relative max-w-4xl w-full mx-4">
+                        <button onclick="this.parentElement.parentElement.remove()" class="absolute top-4 right-4 text-white text-2xl z-10">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="bg-gray-800 rounded-lg p-8 text-center">
+                            <i class="fas fa-play-circle text-6xl text-blue-400 mb-4"></i>
+                            <h3 class="text-white text-xl mb-2">Video Player</h3>
+                            <p class="text-gray-400">Video would play here in a real implementation</p>
+                            <div class="mt-4 flex justify-center space-x-4">
+                                <button class="bg-blue-600 px-4 py-2 rounded text-white">▶️ Play</button>
+                                <button class="bg-gray-600 px-4 py-2 rounded text-white">⏸️ Pause</button>
+                                <button class="bg-gray-600 px-4 py-2 rounded text-white">🔊 Volume</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(videoModal);
+            }, 500);
+        }
+        
+        // Enhanced profile picture updates
+        function updateProfilePicture() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        // Update all profile pictures
+                        document.querySelectorAll('img[alt="Profile"], img[alt="Your avatar"]').forEach(img => {
+                            img.src = e.target.result;
+                        });
+                        showToast('Profile picture updated! 📸', 'success');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            input.click();
+        }
+        
+        // Add click handler for profile picture
+        document.addEventListener('DOMContentLoaded', () => {
+            const profilePics = document.querySelectorAll('img[alt="Profile"]');
+            profilePics.forEach(pic => {
+                pic.style.cursor = 'pointer';
+                pic.addEventListener('click', updateProfilePicture);
+            });
+        });
+        
+        // Enhanced notification system
+        function createNotification(type, message, user = null) {
+            const notification = {
+                id: Date.now(),
+                type: type,
+                user: user || 'System',
+                avatar: user ? `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 50)}` : 'https://i.pravatar.cc/150?img=0',
+                message: message,
+                time: 'Just now',
+                read: false
+            };
+            
+            sampleNotifications.unshift(notification);
+            
+            // Update notification badge
+            const badges = document.querySelectorAll('.notification-badge');
+            badges.forEach(badge => {
+                const count = parseInt(badge.textContent) + 1;
+                badge.textContent = count;
+            });
+            
+            // Show toast
+            showToast(message, 'info');
+            
+            // Reload notifications if on notifications page
+            if (currentSection === 'notifications') {
+                loadNotifications();
+            }
+        }
+        
+        // Simulate real-time activity
+        setInterval(() => {
+            const activities = [
+                { type: 'like', message: 'liked your post', user: 'Random User' },
+                { type: 'follow', message: 'started following you', user: 'New Follower' },
+                { type: 'comment', message: 'commented on your post', user: 'Active User' },
+                { type: 'share', message: 'shared your post', user: 'Engaged User' }
+            ];
+            
+            const activity = activities[Math.floor(Math.random() * activities.length)];
+            if (Math.random() > 0.7) { // 30% chance every interval
+                createNotification(activity.type, activity.message, activity.user);
+            }
+        }, 45000); // Every 45 seconds
+    </script>
+
+</body>
+</html>

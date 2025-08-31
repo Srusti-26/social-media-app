@@ -1,0 +1,1147 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1F2937;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #8B5CF6;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7C3AED;
+        }
+        
+        /* Custom Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        /* Profile Elements */
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #8B5CF6;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .profile-pic:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.7);
+        }
+        
+        .friend-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #8B5CF6;
+            transition: transform 0.2s;
+        }
+        
+        .friend-avatar:hover {
+            transform: scale(1.2);
+            z-index: 10;
+        }
+        
+        .badge {
+            background: linear-gradient(135deg, #4F46E5, #7C3AED);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Tab Styling */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .tab-content.active {
+            display: grid;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .tab-btn {
+            position: relative;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+        
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #8B5CF6;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        
+        .tab-btn.active {
+            color: white;
+        }
+        
+        .tab-btn.active::after {
+            width: 100%;
+            left: 0;
+        }
+        
+        /* Card Styling */
+        .card {
+            background: linear-gradient(145deg, #1E293B, #111827);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #4F46E5, #8B5CF6, #EC4899);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        /* Post Interaction Buttons */
+        .interaction-btn {
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .interaction-btn:hover {
+            transform: scale(1.2);
+        }
+        
+        .liked {
+            color: #EF4444 !important;
+            animation: pulse 0.5s;
+        }
+        
+        /* Loading Skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #2D3748 25%, #4A5568 50%, #2D3748 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 4px;
+        }
+        
+        /* Custom Toggle Switch */
+        .theme-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #374151;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #8B5CF6;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+        
+        
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background: linear-gradient(145deg, #1E293B, #111827);
+            border-radius: 16px;
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .modal-close:hover {
+            transform: scale(1.2);
+            color: #EF4444;
+        }
+        
+        /* Tooltip Styling */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 120px;
+            background-color: #1F2937;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            font-size: 12px;
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Story Circles */
+        .story-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(45deg, #F59E0B, #EC4899, #8B5CF6);
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .story-circle-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid #111827;
+            overflow: hidden;
+        }
+        
+        /* Notification Badge */
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #EF4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen p-4">
+    <div class="container mx-auto max-w-2xl">
+        <!-- Theme Toggle -->
+        <div class="flex justify-end mb-4">
+            <div class="flex items-center">
+                <span class="mr-2 text-sm"><i class="fas fa-moon"></i></span>
+                <label class="theme-switch">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="ml-2 text-sm"><i class="fas fa-sun"></i></span>
+            </div>
+        </div>
+        
+        <!-- Profile Header -->
+        <div class="bg-gray-800 rounded-xl p-6 mb-6 shadow-lg animate-fade-in">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="relative">
+                    <img src="https://i.pravatar.cc/300" alt="Profile Picture" class="profile-pic mb-4 md:mb-0 md:mr-6">
+                    <div class="absolute bottom-0 right-0 bg-green-500 w-5 h-5 rounded-full border-2 border-gray-800"></div>
+                </div>
+                
+                <div class="text-center md:text-left">
+                    <div class="flex items-center justify-center md:justify-start">
+                        <h1 class="text-2xl font-bold">Alex Johnson</h1>
+                        <i class="fas fa-check-circle text-blue-500 ml-2"></i>
+                    </div>
+                    <p class="text-gray-400 mt-1">Digital creator & tech enthusiast</p>
+                    
+                    <!-- Stats -->
+                    <div class="flex justify-center md:justify-start space-x-6 mt-3">
+                        <div class="text-center tooltip">
+                            <div class="font-bold">248</div>
+                            <div class="text-xs text-gray-400">Posts</div>
+                            <span class="tooltip-text">Total posts created</span>
+                        </div>
+                        <div class="text-center tooltip">
+                            <div class="font-bold">15.3K</div>
+                            <div class="text-xs text-gray-400">Followers</div>
+                            <span class="tooltip-text">People following you</span>
+                        </div>
+                        <div class="text-center tooltip">
+                            <div class="font-bold">342</div>
+                            <div class="text-xs text-gray-400">Following</div>
+                            <span class="tooltip-text">People you follow</span>
+                        </div>
+                        <div class="text-center tooltip">
+                            <div class="font-bold">Lv 8</div>
+                            <div class="text-xs text-gray-400">Level</div>
+                            <span class="tooltip-text">Your current level</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="mt-4 flex justify-center md:justify-start space-x-3">
+                        <button id="followBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full transition-all flex items-center">
+                            <i class="fas fa-user-plus mr-2"></i> Follow
+                        </button>
+                        <button id="messageBtn" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-full transition-all flex items-center">
+                            <i class="fas fa-envelope mr-2"></i> Message
+                        </button>
+                        <button class="bg-gray-700 hover:bg-gray-600 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all relative">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            
+                <!-- Stories -->
+                <div class="mt-6 overflow-x-auto pb-2">
+                    <p class="text-sm text-gray-400 mb-3">Stories</p>
+                    <div class="flex">
+                        <div class="story-circle">
+                            <div class="story-circle-inner">
+                                <img src="https://i.pravatar.cc/150?img=10" alt="Story" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="story-circle">
+                            <div class="story-circle-inner">
+                                <img src="https://i.pravatar.cc/150?img=11" alt="Story" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="story-circle">
+                            <div class="story-circle-inner">
+                                <img src="https://i.pravatar.cc/150?img=12" alt="Story" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="story-circle">
+                            <div class="story-circle-inner">
+                                <img src="https://i.pravatar.cc/150?img=13" alt="Story" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="story-circle">
+                            <div class="story-circle-inner">
+                                <div class="w-full h-full bg-gray-700 flex items-center justify-center">
+                                    <i class="fas fa-plus text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Friends Preview -->
+                <div class="mt-6">
+                    <p class="text-sm text-gray-400 mb-2">Friends</p>
+                    <div class="flex space-x-2">
+                        <img src="https://i.pravatar.cc/150?img=1" alt="Friend" class="friend-avatar tooltip">
+                        <img src="https://i.pravatar.cc/150?img=2" alt="Friend" class="friend-avatar tooltip">
+                        <img src="https://i.pravatar.cc/150?img=3" alt="Friend" class="friend-avatar tooltip">
+                        <img src="https://i.pravatar.cc/150?img=4" alt="Friend" class="friend-avatar tooltip">
+                        <img src="https://i.pravatar.cc/150?img=5" alt="Friend" class="friend-avatar tooltip">
+                        <div class="friend-avatar bg-gray-700 flex items-center justify-center text-sm cursor-pointer hover:bg-gray-600 transition-all">+42</div>
+                    </div>
+                </div>
+                
+                <!-- Badges -->
+                <div class="mt-4 flex flex-wrap">
+                    <span class="badge"><i class="fas fa-star mr-1"></i> Influencer</span>
+                    <span class="badge"><i class="fas fa-chart-line mr-1"></i> Trending Creator</span>
+                    <span class="badge"><i class="fas fa-users mr-1"></i> Community Lover</span>
+                    <span class="badge"><i class="fas fa-code mr-1"></i> Developer</span>
+                    <span class="badge"><i class="fas fa-camera mr-1"></i> Photographer</span>
+                </div>
+            </div>
+            
+            <!-- Navigation Tabs -->
+            <div class="flex border-b border-gray-700 mb-6">
+                <button class="tab-btn active flex-1 py-3 font-medium text-center border-b-2 border-purple-500" data-tab="posts">
+                    <i class="fas fa-file-alt mr-2"></i> Posts 📝
+                </button>
+                <button class="tab-btn flex-1 py-3 font-medium text-center border-b-2 border-transparent text-gray-400" data-tab="media">
+                    <i class="fas fa-images mr-2"></i> Media 🖼️
+                </button>
+                <button class="tab-btn flex-1 py-3 font-medium text-center border-b-2 border-transparent text-gray-400" data-tab="achievements">
+                    <i class="fas fa-trophy mr-2"></i> Achievements 🏆
+                </button>
+            </div>
+            
+            <!-- Content Filter -->
+            <div class="mb-6 flex justify-between items-center">
+                <div class="relative">
+                    <select class="bg-gray-800 text-white py-2 px-4 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none">
+                        <option>Most Recent</option>
+                        <option>Most Popular</option>
+                        <option>Most Commented</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <input type="text" placeholder="Search..." class="bg-gray-800 text-white py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 w-full">
+                    <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <!-- Content Section -->
+            <div class="tab-content active" id="posts">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Post Cards -->
+                    <div class="card">
+                        <div class="p-4">
+                            <div class="flex items-center mb-3">
+                                <img src="https://i.pravatar.cc/300" alt="Profile" class="w-8 h-8 rounded-full mr-2">
+                                <div>
+                                    <p class="font-bold text-sm">Alex Johnson</p>
+                                    <p class="text-xs text-gray-400">2 hours ago</p>
+                                </div>
+                                <button class="ml-auto text-gray-400 hover:text-white">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                            </div>
+                            <h3 class="font-bold">My Latest Tech Review</h3>
+                            <p class="text-gray-400 text-sm mt-1">Just got my hands on the newest gadget and I'm blown away by the performance! Check out my full review in the comments.</p>
+                            <div class="mt-3 mb-3">
+                                <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-full mr-2">#tech</span>
+                                <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-full mr-2">#review</span>
+                                <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-full">#gadgets</span>
+                            </div>
+                            
+                                <div class="flex justify-between mt-3 text-sm text-gray-400">
+                                    <div class="flex">
+                                        <span class="mr-4 interaction-btn like-btn" data-post-id="1"><i class="fas fa-heart"></i> 243</span>
+                                        <span class="mr-4 interaction-btn"><i class="fas fa-comment"></i> 42</span>
+                                        <span class="interaction-btn"><i class="fas fa-share"></i> 12</span>
+                                    </div>
+                                    <span class="text-xs text-gray-500">
+                                        <i class="fas fa-eye"></i> 1.2k views
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <img src="https://picsum.photos/600/300?random=20" alt="Post Image" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <div class="flex items-center mb-3">
+                                    <img src="https://i.pravatar.cc/300" alt="Profile" class="w-8 h-8 rounded-full mr-2">
+                                    <div>
+                                        <p class="font-bold text-sm">Alex Johnson</p>
+                                        <p class="text-xs text-gray-400">Yesterday</p>
+                                    </div>
+                                    <button class="ml-auto text-gray-400 hover:text-white">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
+                                <h3 class="font-bold">Coding Tips & Tricks</h3>
+                                <p class="text-gray-400 text-sm mt-1">Here are 5 VS Code extensions that changed my workflow completely. #3 is a game changer!</p>
+                                <div class="mt-3 mb-3">
+                                    <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-full mr-2">#coding</span>
+                                    <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-full">#vscode</span>
+                                </div>
+                                <div class="flex justify-between mt-3 text-sm text-gray-400">
+                                    <div class="flex">
+                                        <span class="mr-4 interaction-btn like-btn" data-post-id="2"><i class="fas fa-heart"></i> 187</span>
+                                        <span class="mr-4 interaction-btn"><i class="fas fa-comment"></i> 23</span>
+                                        <span class="interaction-btn"><i class="fas fa-share"></i> 8</span>
+                                    </div>
+                                    <span class="text-xs text-gray-500">
+                                        <i class="fas fa-eye"></i> 876 views
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="p-4">
+                                <div class="flex items-center mb-3">
+                                    <img src="https://i.pravatar.cc/300" alt="Profile" class="w-8 h-8 rounded-full mr-2">
+                                    <div>
+                                        <p class="font-bold text-sm">Alex Johnson</p>
+                                        <p class="text-xs text-gray-400">3 days ago</p>
+                                    </div>
+                                    <button class="ml-auto text-gray-400 hover:text-white">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
+                                <h3 class="font-bold">Weekend Project</h3>
+                                <p class="text-gray-400 text-sm mt-1">Built this awesome app in just 48 hours! Check it out and let me know what you think.</p>
+                                <div class="bg-gray-700 rounded-lg p-3 mt-3">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-link text-purple-400 mr-2"></i>
+                                        <div>
+                                            <p class="text-sm font-medium">My Weekend Project</p>
+                                            <p class="text-xs text-gray-400">github.com/alexjohnson/weekend-project</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between mt-3 text-sm text-gray-400">
+                                    <div class="flex">
+                                        <span class="mr-4 interaction-btn like-btn" data-post-id="3"><i class="fas fa-heart"></i> 312</span>
+                                        <span class="mr-4 interaction-btn"><i class="fas fa-comment"></i> 56</span>
+                                        <span class="interaction-btn"><i class="fas fa-share"></i> 24</span>
+                                    </div>
+                                    <span class="text-xs text-gray-500">
+                                        <i class="fas fa-eye"></i> 1.5k views
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="grid grid-cols-2 gap-1">
+                                <img src="https://picsum.photos/300/300?random=30" alt="Design" class="w-full h-32 object-cover">
+                                <img src="https://picsum.photos/300/300?random=31" alt="Design" class="w-full h-32 object-cover">
+                                <img src="https://picsum.photos/300/300?random=32" alt="Design" class="w-full h-32 object-cover">
+                                <img src="https://picsum.photos/300/300?random=33" alt="Design" class="w-full h-32 object-cover">
+                            </div>
+                            <div class="p-4">
+                                <div class="flex items-center mb-3">
+                                    <img src="https://i.pravatar.cc/300" alt="Profile" class="w-8 h-8 rounded-full mr-2">
+                                    <div>
+                                        <p class="font-bold text-sm">Alex Johnson</p>
+                                        <p class="text-xs text-gray-400">Last week</p>
+                                    </div>
+                                    <button class="ml-auto text-gray-400 hover:text-white">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
+                                <h3 class="font-bold">Design Inspiration</h3>
+                                <p class="text-gray-400 text-sm mt-1">Found these amazing UI designs that I wanted to share with everyone. Which one is your favorite?</p>
+                                <div class="flex justify-between mt-3 text-sm text-gray-400">
+                                    <div class="flex">
+                                        <span class="mr-4 interaction-btn like-btn" data-post-id="4"><i class="fas fa-heart"></i> 156</span>
+                                        <span class="mr-4 interaction-btn"><i class="fas fa-comment"></i> 18</span>
+                                        <span class="interaction-btn"><i class="fas fa-share"></i> 5</span>
+                                    </div>
+                                    
+                                <span class="text-xs text-gray-500">
+                                    <i class="fas fa-eye"></i> 723 views
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Load More Button -->
+                <div class="mt-6 text-center">
+                    <button id="loadMoreBtn" class="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-lg transition-all flex items-center justify-center mx-auto">
+                        <i class="fas fa-spinner mr-2"></i> Load More
+                    </button>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="media">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <!-- Media Grid -->
+                    <div class="card aspect-square media-item cursor-pointer" data-media-id="1">
+                        <img src="https://picsum.photos/300/300?random=1" alt="Media" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 hover:opacity-100">
+                            <div class="text-white flex space-x-4">
+                                <span><i class="fas fa-heart"></i> 87</span>
+                                <span><i class="fas fa-comment"></i> 12</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card aspect-square media-item cursor-pointer" data-media-id="2">
+                        <img src="https://picsum.photos/300/300?random=2" alt="Media" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 hover:opacity-100">
+                            <div class="text-white flex space-x-4">
+                                <span><i class="fas fa-heart"></i> 124</span>
+                                <span><i class="fas fa-comment"></i> 18</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card aspect-square media-item cursor-pointer" data-media-id="3">
+                        <img src="https://picsum.photos/300/300?random=3" alt="Media" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 hover:opacity-100">
+                            <div class="text-white flex space-x-4">
+                                <span><i class="fas fa-heart"></i> 56</span>
+                                <span><i class="fas fa-comment"></i> 8</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card aspect-square media-item cursor-pointer" data-media-id="4">
+                        <img src="https://picsum.photos/300/300?random=4" alt="Media" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 hover:opacity-100">
+                            <div class="text-white flex space-x-4">
+                                <span><i class="fas fa-heart"></i> 210</span>
+                                <span><i class="fas fa-comment"></i> 32</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card aspect-square media-item cursor-pointer" data-media-id="5">
+                        <img src="https://picsum.photos/300/300?random=5" alt="Media" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 hover:opacity-100">
+                            <div class="text-white flex space-x-4">
+                                <span><i class="fas fa-heart"></i> 78</span>
+                                <span><i class="fas fa-comment"></i> 5</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card aspect-square media-item cursor-pointer" data-media-id="6">
+                        <div class="w-full h-full bg-gray-700 flex items-center justify-center relative">
+                            <i class="fas fa-play-circle text-4xl"></i>
+                            <span class="absolute bottom-2 right-2 text-xs bg-black bg-opacity-70 px-2 py-1 rounded">2:34</span>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 hover:opacity-100">
+                            <div class="text-white flex space-x-4">
+                                <span><i class="fas fa-heart"></i> 145</span>
+                                <span><i class="fas fa-comment"></i> 24</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card aspect-square media-item cursor-pointer" data-media-id="7">
+                        <img src="https://picsum.photos/300/300?random=7" alt="Media" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 hover:opacity-100">
+                            <div class="text-white flex space-x-4">
+                                <span><i class="fas fa-heart"></i> 92</span>
+                                <span><i class="fas fa-comment"></i> 14</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card aspect-square media-item cursor-pointer" data-media-id="8">
+                        <img src="https://picsum.photos/300/300?random=8" alt="Media" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 hover:opacity-100">
+                            <div class="text-white flex space-x-4">
+                                <span><i class="fas fa-heart"></i> 67</span>
+                                <span><i class="fas fa-comment"></i> 9</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card aspect-square media-item cursor-pointer" data-media-id="9">
+                        <div class="w-full h-full bg-gray-700 flex items-center justify-center relative">
+                            <i class="fas fa-play-circle text-4xl"></i>
+                            <span class="absolute bottom-2 right-2 text-xs bg-black bg-opacity-70 px-2 py-1 rounded">1:45</span>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 hover:opacity-100">
+                            <div class="text-white flex space-x-4">
+                               
+                                <span><i class="fas fa-heart"></i> 183</span>
+                                <span><i class="fas fa-comment"></i> 27</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Load More Button -->
+                <div class="mt-6 text-center">
+                    <button id="loadMoreMediaBtn" class="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-lg transition-all flex items-center justify-center mx-auto">
+                        <i class="fas fa-spinner mr-2"></i> Load More
+                    </button>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="achievements">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <!-- Achievement Cards -->
+                    <div class="card p-4 flex flex-col items-center achievement-card" data-achievement="top-creator">
+                        <div class="text-yellow-500 text-4xl mb-2 animate-pulse">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3 class="font-bold text-center">Top Creator 2023</h3>
+                        <p class="text-gray-400 text-xs text-center mt-1">Awarded for exceptional content</p>
+                        <div class="mt-3 text-xs text-yellow-500">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-4 flex flex-col items-center achievement-card" data-achievement="million-views">
+                        <div class="text-blue-500 text-4xl mb-2">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3 class="font-bold text-center">1M Views Club</h3>
+                        <p class="text-gray-400 text-xs text-center mt-1">Reached 1 million total views</p>
+                        <div class="mt-3 w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: 100%"></div>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1">1,243,856 views</p>
+                    </div>
+                    
+                    <div class="card p-4 flex flex-col items-center achievement-card" data-achievement="trendsetter">
+                        <div class="text-purple-500 text-4xl mb-2">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <h3 class="font-bold text-center">Trendsetter</h3>
+                        <p class="text-gray-400 text-xs text-center mt-1">Created 5 trending posts</p>
+                        <div class="mt-3 flex">
+                            <i class="fas fa-fire text-orange-500 mx-1"></i>
+                            <i class="fas fa-fire text-orange-500 mx-1"></i>
+                            <i class="fas fa-fire text-orange-500 mx-1"></i>
+                            <i class="fas fa-fire text-orange-500 mx-1"></i>
+                            <i class="fas fa-fire text-orange-500 mx-1"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-4 flex flex-col items-center achievement-card" data-achievement="verified">
+                        <div class="text-green-500 text-4xl mb-2">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3 class="font-bold text-center">Verified Creator</h3>
+                        <p class="text-gray-400 text-xs text-center mt-1">Official platform recognition</p>
+                        <div class="mt-3 text-green-500">
+                            <i class="fas fa-check-circle text-xl"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-4 flex flex-col items-center achievement-card" data-achievement="community-favorite">
+                        <div class="text-red-500 text-4xl mb-2">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="font-bold text-center">Community Favorite</h3>
+                        <p class="text-gray-400 text-xs text-center mt-1">10K+ total likes received</p>
+                        <div class="mt-3 w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-red-500 h-2 rounded-full" style="width: 85%"></div>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1">8,547 / 10,000</p>
+                    </div>
+                    
+                    <div class="card p-4 flex flex-col items-center achievement-card" data-achievement="early-adopter">
+                        <div class="text-blue-400 text-4xl mb-2">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="font-bold text-center">Early Adopter</h3>
+                        <p class="text-gray-400 text-xs text-center mt-1">Joined during beta phase</p>
+                        <div class="mt-3 text-xs text-gray-400">
+                            <i class="fas fa-calendar"></i> Member since 2020
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Media Modal -->
+    <div id="mediaModal" class="modal">
+        <span class="modal-close">&times;</span>
+        <div class="modal-content">
+            <div class="flex items-center mb-4">
+                <img src="https://i.pravatar.cc/300" alt="Profile" class="w-10 h-10 rounded-full mr-3">
+                <div>
+                    <p class="font-bold">Alex Johnson</p>
+                    <p class="text-xs text-gray-400">Posted 3 days ago</p>
+                </div>
+            </div>
+            <img id="modalImage" src="" alt="Media" class="w-full rounded-lg mb-4">
+            <div class="flex justify-between items-center">
+                <div class="flex space-x-4">
+                    <button class="flex items-center text-gray-400 hover:text-red-500 transition-colors">
+                        <i class="fas fa-heart mr-2"></i> <span id="modalLikes">0</span>
+                    </button>
+                    <button class="flex items-center text-gray-400 hover:text-blue-500 transition-colors">
+                        <i class="fas fa-comment mr-2"></i> <span id="modalComments">0</span>
+                    </button>
+                    <button class="flex items-center text-gray-400 hover:text-green-500 transition-colors">
+                        <i class="fas fa-share mr-2"></i> Share
+                    </button>
+                </div>
+                <button class="text-gray-400 hover:text-white">
+                    <i class="fas fa-bookmark"></i>
+                </button>
+            </div>
+            <div class="mt-4">
+                
+                <h3 class="font-bold mb-2">Comments</h3>
+                <div class="space-y-3 max-h-60 overflow-y-auto">
+                    <div class="flex">
+                        <img src="https://i.pravatar.cc/150?img=20" alt="User" class="w-8 h-8 rounded-full mr-2">
+                        <div class="bg-gray-800 rounded-lg p-2 flex-1">
+                            <p class="text-sm font-medium">Sarah K.</p>
+                            <p class="text-xs text-gray-400">Amazing shot! Love the composition.</p>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <img src="https://i.pravatar.cc/150?img=30" alt="User" class="w-8 h-8 rounded-full mr-2">
+                        <div class="bg-gray-800 rounded-lg p-2 flex-1">
+                            <p class="text-sm font-medium">Mike T.</p>
+                            <p class="text-xs text-gray-400">What camera did you use for this?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 flex">
+                    <img src="https://i.pravatar.cc/150?img=40" alt="User" class="w-8 h-8 rounded-full mr-2">
+                    <input type="text" placeholder="Add a comment..." class="bg-gray-800 text-white rounded-full py-2 px-4 flex-1 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <button class="ml-2 bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Tab functionality
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active', 'border-purple-500');
+                    btn.classList.add('border-transparent', 'text-gray-400');
+                });
+                
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active', 'border-purple-500');
+                button.classList.remove('border-transparent', 'text-gray-400');
+                
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Like functionality
+        const likeButtons = document.querySelectorAll('.like-btn');
+        likeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                const countText = this.textContent;
+                let count = parseInt(countText.match(/\d+/)[0]);
+                
+                if (icon.classList.contains('liked')) {
+                    icon.classList.remove('liked');
+                    count--;
+                } else {
+                    icon.classList.add('liked');
+                    count++;
+                    
+                    // Add heart animation
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '<i class="fas fa-heart text-red-500"></i>';
+                    heart.style.position = 'absolute';
+                    heart.style.left = `${Math.random() * 20 + 40}%`;
+                    heart.style.top = `${Math.random() * 20 + 40}%`;
+                    heart.style.fontSize = '24px';
+                    heart.style.opacity = '0';
+                    heart.style.transform = 'translateY(0)';
+                    heart.style.transition = 'all 1s ease';
+                    this.parentNode.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.style.opacity = '1';
+                        heart.style.transform = 'translateY(-50px)';
+                    }, 10);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 1000);
+                }
+                
+                this.innerHTML = `<i class="fas fa-heart"></i> ${count}`;
+            });
+        });
+        
+        // Media modal functionality
+        const mediaItems = document.querySelectorAll('.media-item');
+        const mediaModal = document.getElementById('mediaModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalLikes = document.getElementById('modalLikes');
+        const modalComments = document.getElementById('modalComments');
+        const modalClose = document.querySelector('.modal-close');
+        
+        mediaItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const mediaId = this.getAttribute('data-media-id');
+                const imgSrc = this.querySelector('img')?.src || 'https://picsum.photos/800/600?random=' + mediaId;
+                const likes = this.querySelector('.fa-heart').nextSibling.textContent.trim();
+                const comments = this.querySelector('.fa-comment').nextSibling.textContent.trim();
+                
+                modalImage.src = imgSrc;
+                modalLikes.textContent = likes;
+                modalComments.textContent = comments;
+                mediaModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        modalClose.addEventListener('click', function() {
+            mediaModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                body.classList.remove('bg-gray-900');
+                body.classList.add('bg-gray-100', 'text-gray-900');
+                document.querySelectorAll('.card, .bg-gray-800').forEach(el => {
+                    el.classList.remove('bg-gray-800');
+                    el.classList.add('bg-white', 'text-gray-900');
+                });
+            } else {
+                body.classList.remove('bg-gray-100', 'text-gray-900');
+                body.classList.add('bg-gray-900');
+                document.querySelectorAll('.card, .bg-white').forEach(el => {
+                    el.classList.remove('bg-white', 'text-gray-900');
+                    el.classList.add('bg-gray-800');
+                });
+            }
+        });
+        
+        // Follow button functionality
+        const followBtn = document.getElementById('followBtn');
+        followBtn.addEventListener('click', function() {
+            if (this.classList.contains('bg-purple-600')) {
+                this.classList.remove('bg-purple-600', 'hover:bg-purple-700');
+                this.classList.add('bg-gray-600', 'hover:bg-gray-500');
+                this.innerHTML = '<i class="fas fa-user-check mr-2"></i> Following';
+            } else {
+                this.classList.remove('bg-gray-600', 'hover:bg-gray-500');
+                this.classList.add('bg-purple-600', 'hover:bg-purple-700');
+                this.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Follow';
+            }
+        });
+        
+        
+        // Load more functionality
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        loadMoreBtn.addEventListener('click', function() {
+            this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Loading...';
+            
+            setTimeout(() => {
+                // Simulate loading new posts
+                const postsContainer = document.querySelector('#posts .grid');
+                
+                // Create new post elements
+                const newPost = document.createElement('div');
+                newPost.className = 'card';
+                newPost.innerHTML = `
+                    <div class="p-4">
+                        <div class="flex items-center mb-3">
+                            <img src="https://i.pravatar.cc/300" alt="Profile" class="w-8 h-8 rounded-full mr-2">
+                            <div>
+                                <p class="font-bold text-sm">Alex Johnson</p>
+                                <p class="text-xs text-gray-400">Just now</p>
+                            </div>
+                            <button class="ml-auto text-gray-400 hover:text-white">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                        <h3 class="font-bold">New Content Added</h3>
+                        <p class="text-gray-400 text-sm mt-1">This post was dynamically loaded when you clicked the button!</p>
+                        <div class="flex justify-between mt-3 text-sm text-gray-400">
+                            <div class="flex">
+                                <span class="mr-4 interaction-btn like-btn" data-post-id="new"><i class="fas fa-heart"></i> 0</span>
+                                <span class="mr-4 interaction-btn"><i class="fas fa-comment"></i> 0</span>
+                                <span class="interaction-btn"><i class="fas fa-share"></i> 0</span>
+                            </div>
+                            <span class="text-xs text-gray-500">
+                                <i class="fas fa-eye"></i> 1 view
+                            </span>
+                        </div>
+                    </div>
+                `;
+                
+                postsContainer.appendChild(newPost);
+                
+                // Reset button
+                this.innerHTML = '<i class="fas fa-spinner mr-2"></i> Load More';
+                
+                // Add event listener to new like button
+                const newLikeBtn = newPost.querySelector('.like-btn');
+                newLikeBtn.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    const countText = this.textContent;
+                    let count = parseInt(countText.match(/\d+/)[0]);
+                    
+                    if (icon.classList.contains('liked')) {
+                        icon.classList.remove('liked');
+                        count--;
+                    } else {
+                        icon.classList.add('liked');
+                        count++;
+                    }
+                    
+                    this.innerHTML = `<i class="fas fa-heart"></i> ${count}`;
+                });
+            }, 1500);
+        });
+        
+        // Achievement card interactions
+        const achievementCards = document.querySelectorAll('.achievement-card');
+        achievementCards.forEach(card => {
+            card.addEventListener('click', function() {
+                this.classList.add('animate-pulse');
+                setTimeout(() => {
+                    this.classList.remove('animate-pulse');
+                }, 1000);
+            });
+        });
+        
+        // Message button functionality
+        const messageBtn = document.getElementById('messageBtn');
+        messageBtn.addEventListener('click', function() {
+            alert('Messaging feature coming soon!');
+        });
+        
+        // Initialize tooltips for dynamically added elements
+        document.addEventListener('mouseover', function(e) {
+            if (e.target.classList.contains('tooltip') || e.target.closest('.tooltip')) {
+                const tooltip = e.target.classList.contains('tooltip') ? e.target : e.target.closest('.tooltip');
+                if (!tooltip.querySelector('.tooltip-text')) {
+                    const tooltipText = document.createElement('span');
+                    tooltipText.className = 'tooltip-text';
+                    tooltipText.textContent = tooltip.getAttribute('data-tooltip') || 'Info';
+                    tooltip.appendChild(tooltipText);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

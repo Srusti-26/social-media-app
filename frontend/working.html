@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialWave - Working Version</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            min-height: 100vh;
+        }
+        .glass {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+        .liked {
+            color: #ef4444 !important;
+        }
+        .comments-open {
+            display: block !important;
+        }
+    </style>
+</head>
+<body class="text-white p-4">
+    <!-- Header -->
+    <div class="glass p-4 rounded-xl mb-6 max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-center text-blue-400">🌊 SocialWave</h1>
+        <p class="text-center text-gray-300 mt-2">Like, Comment & Post - All Working!</p>
+    </div>
+
+    <div class="max-w-4xl mx-auto">
+        <!-- Create Post -->
+        <div class="glass p-6 rounded-xl mb-6">
+            <h2 class="text-xl font-bold mb-4">Create a Post</h2>
+            <textarea id="newPostText" placeholder="What's on your mind?" class="w-full p-3 bg-gray-700 rounded-lg text-white mb-4" rows="3"></textarea>
+            <div class="flex justify-between items-center">
+                <input type="file" id="newPostImage" accept="image/*" class="text-sm">
+                <button onclick="createPost()" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg">
+                    <i class="fas fa-paper-plane mr-2"></i>Post
+                </button>
+            </div>
+        </div>
+
+        <!-- Posts Container -->
+        <div id="postsContainer">
+            <!-- Post 1 -->
+            <div class="glass p-6 rounded-xl mb-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <img src="https://i.pravatar.cc/150?img=1" alt="Sarah" class="w-12 h-12 rounded-full">
+                    <div>
+                        <h3 class="font-bold">Sarah Johnson</h3>
+                        <p class="text-sm text-gray-400">2 hours ago</p>
+                    </div>
+                </div>
+                <p class="mb-4">Just had an amazing sunset photoshoot! 🌅✨</p>
+                <img src="https://picsum.photos/600/300?random=1" alt="Post" class="w-full rounded-lg mb-4">
+                
+                <!-- Action Buttons -->
+                <div class="flex items-center gap-6 py-3 border-t border-gray-600">
+                    <button onclick="likePost(this)" class="flex items-center gap-2 text-gray-400 hover:text-red-400">
+                        <i class="fas fa-heart"></i>
+                        <span class="like-count">127</span>
+                    </button>
+                    <button onclick="toggleComments(this)" class="flex items-center gap-2 text-gray-400 hover:text-blue-400">
+                        <i class="fas fa-comment"></i>
+                        <span class="comment-count">8</span>
+                    </button>
+                    <button onclick="sharePost()" class="flex items-center gap-2 text-gray-400 hover:text-green-400">
+                        <i class="fas fa-share"></i>
+                        Share
+                    </button>
+                </div>
+
+                <!-- Comments Section -->
+                <div class="comments-section hidden mt-4 pt-4 border-t border-gray-600">
+                    <div class="comments-list space-y-3 mb-4">
+                        <div class="flex gap-3">
+                            <img src="https://i.pravatar.cc/150?img=2" alt="Mike" class="w-8 h-8 rounded-full">
+                            <div class="bg-gray-700 rounded-lg p-3 flex-1">
+                                <p class="font-bold text-sm">Mike Chen</p>
+                                <p class="text-sm">Absolutely stunning! 😍</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <img src="https://i.pravatar.cc/150?img=3" alt="Emma" class="w-8 h-8 rounded-full">
+                            <div class="bg-gray-700 rounded-lg p-3 flex-1">
+                                <p class="font-bold text-sm">Emma Wilson</p>
+                                <p class="text-sm">What camera did you use?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <img src="https://i.pravatar.cc/150?img=50" alt="You" class="w-8 h-8 rounded-full">
+                        <input type="text" placeholder="Write a comment..." class="flex-1 bg-gray-700 rounded-full px-4 py-2 text-white" onkeypress="handleComment(event, this)">
+                        <button onclick="addComment(this)" class="text-blue-400 hover:text-blue-300 px-3">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post 2 -->
+            <div class="glass p-6 rounded-xl mb-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <img src="https://i.pravatar.cc/150?img=4" alt="Alex" class="w-12 h-12 rounded-full">
+                    <div>
+                        <h3 class="font-bold">Alex Rodriguez</h3>
+                        <p class="text-sm text-gray-400">4 hours ago</p>
+                    </div>
+                </div>
+                <p class="mb-4">Coffee and coding session! ☕💻</p>
+                <img src="https://picsum.photos/600/300?random=2" alt="Post" class="w-full rounded-lg mb-4">
+                
+                <!-- Action Buttons -->
+                <div class="flex items-center gap-6 py-3 border-t border-gray-600">
+                    <button onclick="likePost(this)" class="flex items-center gap-2 text-gray-400 hover:text-red-400">
+                        <i class="fas fa-heart"></i>
+                        <span class="like-count">89</span>
+                    </button>
+                    <button onclick="toggleComments(this)" class="flex items-center gap-2 text-gray-400 hover:text-blue-400">
+                        <i class="fas fa-comment"></i>
+                        <span class="comment-count">5</span>
+                    </button>
+                    <button onclick="sharePost()" class="flex items-center gap-2 text-gray-400 hover:text-green-400">
+                        <i class="fas fa-share"></i>
+                        Share
+                    </button>
+                </div>
+
+                <!-- Comments Section -->
+                <div class="comments-section hidden mt-4 pt-4 border-t border-gray-600">
+                    <div class="comments-list space-y-3 mb-4">
+                        <div class="flex gap-3">
+                            <img src="https://i.pravatar.cc/150?img=5" alt="Lisa" class="w-8 h-8 rounded-full">
+                            <div class="bg-gray-700 rounded-lg p-3 flex-1">
+                                <p class="font-bold text-sm">Lisa Park</p>
+                                <p class="text-sm">What are you building?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <img src="https://i.pravatar.cc/150?img=50" alt="You" class="w-8 h-8 rounded-full">
+                        <input type="text" placeholder="Write a comment..." class="flex-1 bg-gray-700 rounded-full px-4 py-2 text-white" onkeypress="handleComment(event, this)">
+                        <button onclick="addComment(this)" class="text-blue-400 hover:text-blue-300 px-3">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg hidden z-50"></div>
+
+    <script>
+        // Like Post
+        function likePost(button) {
+            const likeCount = button.querySelector('.like-count');
+            const currentCount = parseInt(likeCount.textContent);
+            
+            if (button.classList.contains('liked')) {
+                // Unlike
+                button.classList.remove('liked');
+                likeCount.textContent = currentCount - 1;
+                showToast('Like removed');
+            } else {
+                // Like
+                button.classList.add('liked');
+                likeCount.textContent = currentCount + 1;
+                
+                // Animation
+                button.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    button.style.transform = 'scale(1)';
+                }, 200);
+                
+                showToast('Post liked! ❤️');
+            }
+        }
+
+        // Toggle Comments
+        function toggleComments(button) {
+            const post = button.closest('.glass');
+            const commentsSection = post.querySelector('.comments-section');
+            
+            if (commentsSection.classList.contains('hidden')) {
+                commentsSection.classList.remove('hidden');
+                showToast('Comments opened 💬');
+                // Focus on input
+                setTimeout(() => {
+                    const input = commentsSection.querySelector('input');
+                    if (input) input.focus();
+                }, 100);
+            } else {
+                commentsSection.classList.add('hidden');
+            }
+        }
+
+        // Handle Enter key for comments
+        function handleComment(event, input) {
+            if (event.key === 'Enter') {
+                const button = input.nextElementSibling;
+                addComment(button);
+            }
+        }
+
+        // Add Comment
+        function addComment(button) {
+            const input = button.previousElementSibling;
+            const comment = input.value.trim();
+            
+            if (comment) {
+                const commentsContainer = button.closest('.comments-section').querySelector('.comments-list');
+                const newComment = document.createElement('div');
+                newComment.className = 'flex gap-3';
+                newComment.innerHTML = `
+                    <img src="https://i.pravatar.cc/150?img=50" alt="You" class="w-8 h-8 rounded-full">
+                    <div class="bg-gray-700 rounded-lg p-3 flex-1">
+                        <p class="font-bold text-sm">You</p>
+                        <p class="text-sm">${comment}</p>
+                    </div>
+                `;
+                
+                commentsContainer.appendChild(newComment);
+                input.value = '';
+                
+                // Update comment count
+                const post = button.closest('.glass');
+                const commentButton = post.querySelector('[onclick*="toggleComments"]');
+                const countSpan = commentButton.querySelector('.comment-count');
+                const currentCount = parseInt(countSpan.textContent);
+                countSpan.textContent = currentCount + 1;
+                
+                showToast('Comment added! 💬');
+            }
+        }
+
+        // Share Post
+        function sharePost() {
+            showToast('Post shared! 🔄');
+        }
+
+        // Create New Post
+        function createPost() {
+            const textInput = document.getElementById('newPostText');
+            const imageInput = document.getElementById('newPostImage');
+            const text = textInput.value.trim();
+            
+            if (text || imageInput.files.length > 0) {
+                const postsContainer = document.getElementById('postsContainer');
+                const newPost = document.createElement('div');
+                newPost.className = 'glass p-6 rounded-xl mb-6';
+                
+                let imageHTML = '';
+                if (imageInput.files.length > 0) {
+                    const file = imageInput.files[0];
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = newPost.querySelector('.post-image');
+                        if (img) {
+                            img.src = e.target.result;
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                    imageHTML = '<img src="" alt="Post" class="post-image w-full rounded-lg mb-4">';
+                }
+                
+                newPost.innerHTML = `
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://i.pravatar.cc/150?img=50" alt="You" class="w-12 h-12 rounded-full">
+                        <div>
+                            <h3 class="font-bold">You</h3>
+                            <p class="text-sm text-gray-400">Just now</p>
+                        </div>
+                    </div>
+                    <p class="mb-4">${text}</p>
+                    ${imageHTML}
+                    
+                    <div class="flex items-center gap-6 py-3 border-t border-gray-600">
+                        <button onclick="likePost(this)" class="flex items-center gap-2 text-gray-400 hover:text-red-400">
+                            <i class="fas fa-heart"></i>
+                            <span class="like-count">0</span>
+                        </button>
+                        <button onclick="toggleComments(this)" class="flex items-center gap-2 text-gray-400 hover:text-blue-400">
+                            <i class="fas fa-comment"></i>
+                            <span class="comment-count">0</span>
+                        </button>
+                        <button onclick="sharePost()" class="flex items-center gap-2 text-gray-400 hover:text-green-400">
+                            <i class="fas fa-share"></i>
+                            Share
+                        </button>
+                    </div>
+
+                    <div class="comments-section hidden mt-4 pt-4 border-t border-gray-600">
+                        <div class="comments-list space-y-3 mb-4"></div>
+                        <div class="flex gap-3">
+                            <img src="https://i.pravatar.cc/150?img=50" alt="You" class="w-8 h-8 rounded-full">
+                            <input type="text" placeholder="Write a comment..." class="flex-1 bg-gray-700 rounded-full px-4 py-2 text-white" onkeypress="handleComment(event, this)">
+                            <button onclick="addComment(this)" class="text-blue-400 hover:text-blue-300 px-3">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                postsContainer.insertBefore(newPost, postsContainer.firstChild);
+                
+                // Clear form
+                textInput.value = '';
+                imageInput.value = '';
+                
+                showToast('Post created! 🎉');
+            } else {
+                showToast('Please write something or add an image');
+            }
+        }
+
+        // Show Toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.remove('hidden');
+            
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
