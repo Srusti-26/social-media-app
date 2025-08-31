@@ -6,40 +6,79 @@
 
 A feature-rich, modern e-commerce platform built with Django and Bootstrap 5.   Complete shopping experience with product listings, cart functionality, user authentication, and order processing.
 
-## Demo 
+## 🎥 Demo Video
 
-![Demo ](media/project_demo/DEMO.gif)
+**📹 Watch the complete demo:** [DEMO.mp4](./media/project_demo/DEMO.mp4)
+
+## 🎬 Demo GIF
+
+![Demo GIF](./media/project_demo/DEMO.gif)
 
 *Quick preview of the application in action*
 
-*Complete demo showcasing all features including product browsing, cart operations, checkout process, and user authentication - check media/project_demo/DEMO.mp4*
+> **📺 For complete functionality demonstration including sorting, search, and cart operations, watch the demo video above!**
 
+## 📸 Screenshots
 
-## Screenshots
+<details>
+<summary><strong>🏠 Homepage - Product Listings</strong></summary>
 
-### Homepage - Product Listings
-![Homepage](media/Screenshots/Home.jpeg)
+![Homepage](./media/Screenshots/Home.jpeg)
 
-### Product Details
-![Product Details](media/Screenshots/Product_detail.jpeg)
+*Modern product grid with search, filtering, and sorting capabilities*
+</details>
 
-### Shopping Cart
-![Shopping Cart](media/Screenshots/Cart.jpeg)
+<details>
+<summary><strong>📱 Product Details</strong></summary>
 
-### Search Functionality
-![Search](media/Screenshots/Search.jpeg)
+![Product Details](./media/Screenshots/Product_detail.jpeg)
 
-### User Authentication
-![Login](media/Screenshots/Login.jpeg)
-![Register](media/Screenshots/Register.jpeg)
+*Detailed product view with add to cart functionality*
+</details>
 
-### About Page
-![About](media/Screenshots/About.jpeg)
+<details>
+<summary><strong>🛒 Shopping Cart</strong></summary>
 
-### Contact Page
-![Contact](media/Screenshots/Contact.jpeg)
+![Shopping Cart](./media/Screenshots/Cart.jpeg)
 
-#### Note: For complete functionality demonstration including sorting, search, and cart operations, refer to media/project_demo/DEMO.mp4 (demo video)
+*Interactive shopping cart with quantity controls*
+</details>
+
+<details>
+<summary><strong>🔍 Search Functionality</strong></summary>
+
+![Search](./media/Screenshots/Search.jpeg)
+
+*Real-time product search with instant results*
+</details>
+
+<details>
+<summary><strong>🔐 User Authentication</strong></summary>
+
+**Login Page:**
+![Login](./media/Screenshots/Login.jpeg)
+
+**Registration Page:**
+![Register](./media/Screenshots/Register.jpeg)
+
+*Secure user authentication with Django Allauth*
+</details>
+
+<details>
+<summary><strong>ℹ️ About Page</strong></summary>
+
+![About](./media/Screenshots/About.jpeg)
+
+*Professional about page with company information*
+</details>
+
+<details>
+<summary><strong>📞 Contact Page</strong></summary>
+
+![Contact](./media/Screenshots/Contact.jpeg)
+
+*Contact form with modern design*
+</details>
 
 ## Features
 
@@ -423,7 +462,6 @@ For support and questions:
 - Bootstrap team for the responsive CSS framework
 - Font Awesome for the icon library
 - Python community for excellent packages
-
 
 ---
 
