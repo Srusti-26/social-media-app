@@ -47,7 +47,7 @@ A feature-rich, modern social media platform built with cutting-edge web technol
 
 ### Post Creation
 ![Posting](backend/Screenshots/posting.jpeg)
-#### Note:Overlapping because of screenshot to she how actually project is check-backend/project_demo/DEMO.mp4 (demo video)
+#### Note:Overlapping because of screenshot to see how actually project is check-backend/project_demo/DEMO.mp4 (demo video)
 ## Features
 
 ### Multiple Design Variations
