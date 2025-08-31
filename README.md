@@ -423,7 +423,7 @@ For support and questions:
 - Bootstrap team for the responsive CSS framework
 - Font Awesome for the icon library
 - Python community for excellent packages
-- NMIT for educational support
+
 
 ---
 
