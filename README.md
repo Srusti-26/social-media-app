@@ -13,7 +13,7 @@ A feature-rich, modern social media platform built with cutting-edge web technol
   Your browser does not support the video tag.
 </video>
 
-*Complete demo showcasing all features and design variations*
+*Complete demo showcasing all features and design variations check - backend/project_demo/DEMO.mp4 *
 
 ## Screenshots
 
